@@ -3,22 +3,23 @@ from langchain.retrievers.document_compressors import CohereRerank
 from langchain_community.embeddings import CohereEmbeddings
 from langchain_community.chat_models import ChatCohere
 from langchain.docstore.document import Document
+import cohere
+import weaviate
+import streamlit as st
+from streamlit_pills import pills
 
 from utils import retrieve_top_documents
 from utils import rag
 
-import cohere
-import weaviate
-
 import requests
 import json
 import os
-
-import streamlit as st
-from streamlit_pills import pills
 import numpy as np
 import pandas as pd
 import extra
+
+import warnings
+warnings.filterwarnings("ignore")
 
 # Instantiate Cohere
 api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
@@ -202,6 +203,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+print(choice)
 if choice is not None:
     prefill_prompts(feature, choice)
 
