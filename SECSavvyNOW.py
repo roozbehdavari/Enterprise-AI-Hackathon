@@ -4,6 +4,8 @@ from langchain_community.embeddings import CohereEmbeddings
 from langchain_community.chat_models import ChatCohere
 from langchain.docstore.document import Document
 
+from utils import retrieve_top_documents
+
 import cohere
 import weaviate
 
@@ -38,40 +40,37 @@ cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere)
 cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere)
 rag = CohereRagRetriever(llm=cohere_chat_model)
 
-
-# print(client_weaviate.schema.get())
-
-def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
+# def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
     
-    # print('Inside retrival function')
-    # print(f'Company names: {company_names}')
+#     # print('Inside retrival function')
+#     # print(f'Company names: {company_names}')
 
-    response = (
-        client_weaviate.query
-        .get("SECSavvyNow", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
-        .with_near_text({"concepts": [query],
-                        "distance": max_distance})
-        .with_where({
-            "path": ["companyName"],
-            "operator": "ContainsAny",
-            "valueText": company_names
-        })
-        # .with_additional(["distance"])
-        .with_limit(top_n)
-        .do()
-    )
+#     response = (
+#         client_weaviate.query
+#         .get("SECSavvyNow", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
+#         .with_near_text({"concepts": [query],
+#                         "distance": max_distance})
+#         .with_where({
+#             "path": ["companyName"],
+#             "operator": "ContainsAny",
+#             "valueText": company_names
+#         })
+#         # .with_additional(["distance"])
+#         .with_limit(top_n)
+#         .do()
+#     )
     
-    # print(f'Response: {response}')
+#     # print(f'Response: {response}')
     
-    #return response['data']['Get']['Test']
-    return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['SECSavvyNow']]
+#     #return response['data']['Get']['Test']
+#     return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['SECSavvyNow']]
 
 def rag(user_query, comp_names):
     
     # print('Inside rag function')
     
     # get top relevant documents
-    input_docs = retrieve_top_documents(user_query, company_names=comp_names)
+    input_docs = retrieve_top_documents(query=user_query, company_names=comp_names)
 
     # print(f'User Query: {user_query}')
     # print(f'Input Docs: {input_docs}')
