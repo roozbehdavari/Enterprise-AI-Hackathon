@@ -3,15 +3,18 @@ from langchain.retrievers.document_compressors import CohereRerank
 from langchain_community.embeddings import CohereEmbeddings
 from langchain_community.chat_models import ChatCohere
 from langchain.docstore.document import Document
-from langchain.schema import HumanMessage
+from langchain_core.messages import AIMessage, HumanMessage
 from langchain.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 
 import cohere
 import weaviate
 
 import requests
 import json
-from typing import List
+from typing import List, Tuple, Optional
 
 
 # Cohere Instantiation
