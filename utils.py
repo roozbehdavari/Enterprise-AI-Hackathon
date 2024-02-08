@@ -286,7 +286,7 @@ def rag(user_query: str,
     
     # Create the Cohere RAG retriever using the chat model 
     rag_retriever = CohereRagRetriever(llm=cohere_chat_model, rag_prompt=rag_prompt)
-    docs = rag_retriever.get_relevant_documents(combined_history, source_documents=relevant_docs)
+    docs = rag_retriever.get_relevant_documents(user_query, source_documents=relevant_docs)
     
     # Extract answer and citations
     answer = docs[-1].page_content
