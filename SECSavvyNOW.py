@@ -48,7 +48,7 @@ def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
 
     response = (
         client_weaviate.query
-        .get("Test", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
+        .get("SECSavvyNow", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
         .with_near_text({"concepts": [query],
                         "distance": max_distance})
         .with_where({
@@ -64,7 +64,7 @@ def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
     # print(f'Response: {response}')
     
     #return response['data']['Get']['Test']
-    return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['Test']]
+    return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['SECSavvyNow']]
 
 def rag(user_query, comp_names):
     
