@@ -252,7 +252,7 @@ def is_document_relevant_extractive_summary(document: Document,
 
 
 def rag(user_query: str, 
-        chat_history: str, 
+        chat_history: str = None, 
         user_persona: str = 'Individual Investor', 
         company_names: List[str] = ['UNITEDHEALTH GROUP INC']
         ) -> Tuple[str, List[str]]:
