@@ -46,19 +46,19 @@ client_weaviate = weaviate.Client(
 
 
 def retrieve_top_documents(
-    query: str,
-    company_names: List[str],
-    class_name: str = 'SECSavvyNOWClean',
-    top_n: int = 20,
-    max_distance: float = 999.0
-) -> List[Document]:
+                            query: str,
+                            company_names: List[str],
+                            class_name: str = 'SECSavvyNOW',
+                            top_n: int = 20,
+                            max_distance: float = 999.0
+                        ) -> List[Document]:
     """
     Retrieve top documents from Weaviate based on the provided query and company names.
 
     Args:
         query (str): The query string used for retrieving relevant documents.
         company_names (list of str): List of company names to filter the documents.
-        class_name (str, optional): Name of the class in Weaviate. Defaults to 'SECSavvyNOWClean'.
+        class_name (str, optional): Name of the class in Weaviate. Defaults to 'SECSavvyNOW'.
         top_n (int, optional): Number of top documents to retrieve. Defaults to 20.
         max_distance (float, optional): Maximum distance for near text search. Defaults to 999.0.
 
@@ -92,13 +92,51 @@ def retrieve_top_documents(
     return documents
 
 
+def generate_user_query(chat_history: str, 
+                        model: ChatCohere = cohere_chat_model_light
+                    ) -> str:
+    """
+    Generates a new user query based on the provided chat history using the specified Cohere model.
+
+    Args:
+        chat_history (str): Chat history exchanged between the user and the AI assistant.
+        model (ChatCohere, optional): The Cohere model instance to use for generating the user query. 
+            Defaults to cohere_chat_model_light.
+
+    Returns:
+        str: The generated user query.
+    """
+    # Define the template for generating the new user query
+    template = """You are an intelligent assistant for generating the most concise and accurate user query based on the chat history.  
+    Use the following pieces of context to generate the new user query. 
+    Use two sentences maximum and keep the answer concise.
+    User Query should be in a form of a question.
+    Chat History: {chat_history} 
+    User Query:
+    """
+
+    # Create a prompt template from the template string
+    prompt = ChatPromptTemplate.from_template(template)
+
+    # Define the processing chain
+    rag_chain = (
+        {"chat_history": RunnablePassthrough()}
+        | prompt
+        | model
+        | StrOutputParser()
+    )
+
+    # Invoke the processing chain to generate the user query
+    generated_query = rag_chain.invoke(chat_history)
+
+    return generated_query
 
 
 def generate_rag_prompt_template(
-    user_persona: str,
-    user_query: str,
-    company_names: List[str]
-) -> str:
+                                user_persona: str,
+                                user_query: str,
+                                company_names: List[str]
+                            ) -> str:
     """
     Generates a prompt template for the RAG (Retrieval-Augmented Generation) process.
 
@@ -140,9 +178,10 @@ def generate_rag_prompt_template(
     return PROMPT
 
 
-
-
-def is_document_relevant(document, user_query, cohere_model):
+def is_document_relevant(document: Document, 
+                         user_query: str, 
+                         cohere_model: ChatCohere = cohere_chat_model_light
+                        ) -> bool:
     """
     Check the relevancy of a document to the user query using the specified Cohere model.
 
@@ -159,7 +198,9 @@ def is_document_relevant(document, user_query, cohere_model):
     document_content = document.page_content
 
     # Generate the prompt using the document content and user query
-    prompt = f"Reply with YES or NO only. Is the document at least partially relevant to the query: '{user_query}'? Document content: {document_content}. \n"
+    prompt = f"""Reply with YES or NO only. 
+                 Is the document at least partially relevant to the query: 
+                 '{user_query}'? Document content: {document_content}. \n"""
     
     # Generate response using the Cohere model
     messages = [HumanMessage(content=prompt)]
@@ -167,10 +208,12 @@ def is_document_relevant(document, user_query, cohere_model):
 
     # Determine relevancy based on response
     return "yes" in response.content.lower()
+    
 
-
-
-def is_document_relevant_extractive_summary(document, user_query, cohere_model):
+def is_document_relevant_extractive_summary(document: Document, 
+                                            user_query: str, 
+                                            cohere_model: ChatCohere = cohere_chat_model_light
+                                        ) -> bool:
     """
     Check the relevancy of a document to the user query using the specified Cohere model.
 
@@ -203,44 +246,47 @@ def is_document_relevant_extractive_summary(document, user_query, cohere_model):
         return None
     else:
         return Document(page_content=response.content, metadata={"source": document.metadata['source']})
-    
 
-def rag(user_query, user_persona='Individual Investor', company_names=['UNITEDHEALTH GROUP INC']):
+
+def rag(user_query: str, 
+        chat_history: str, 
+        user_persona: str = 'Individual Investor', 
+        company_names: List[str] = ['UNITEDHEALTH GROUP INC']) -> Tuple[str, List[str]]:
     """
     Retrieve an answer and citations related to the given user query using Cohere's RAG model.
 
     Args:
         user_query (str): The user query for which the answer is sought.
+        chat_history (str): The chat history containing the conversation context.
+        user_persona (str, optional): The persona of the user (e.g., Individual Investor, Financial Analyst, Sales Representative). Defaults to 'Individual Investor'.
+        company_names (list of str, optional): List of company names being analyzed. Defaults to ['UNITEDHEALTH GROUP INC'].
 
     Returns:
         tuple: A tuple containing the answer text and a list of citations.
-
-    Notes:
-        This function assumes that the necessary variables like api_key_cohere and client_weaviate
-        are already defined and accessible within the scope.
-
     """
+
+    # If chat_history is not empty, refine the user query
+    if chat_history:
+        # Append the user query to the chat history
+        combined_history = f"{chat_history}\n{user_query}"
+        user_query = generate_user_query(combined_history)
+
     # Retrieve top relevant documents
     input_docs = retrieve_top_documents(user_query, company_names=company_names)
 
     # Filter relevant documents using the light model
-    relevant_docs = []
-    for doc in input_docs:
-        if is_document_relevant(doc, user_query, cohere_chat_model_light):
-            relevant_docs.append(doc)
+    relevant_docs = [doc for doc in input_docs if is_document_relevant(doc, user_query)]
 
-    # # Generate the Prompt based on 
-    rag_prompt = generate_rag_prompt_template(user_persona=user_persona, 
-                                              user_query=user_query,
-                                              company_names=company_names)
+    # Generate the RAG prompt template
+    rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
     
     # Create the Cohere RAG retriever using the chat model 
-    rag = CohereRagRetriever(llm=cohere_chat_model, rag_prompt=rag_prompt)
-    docs = rag.get_relevant_documents(user_query, 
-                                      source_documents=relevant_docs)
+    rag_retriever = CohereRagRetriever(llm=cohere_chat_model, rag_prompt=rag_prompt)
+    docs = rag_retriever.get_relevant_documents(combined_history, source_documents=relevant_docs)
     
     # Extract answer and citations
     answer = docs[-1].page_content
     citations = docs[-1].metadata.get('citations', [])
     
     return answer, citations
+
