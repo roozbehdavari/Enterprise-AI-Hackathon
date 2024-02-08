@@ -5,6 +5,7 @@ from langchain_community.chat_models import ChatCohere
 from langchain.docstore.document import Document
 
 from utils import retrieve_top_documents
+from utils import rag
 
 import cohere
 import weaviate
@@ -19,76 +20,34 @@ import numpy as np
 import pandas as pd
 import extra
 
-# Instantiate Cohere and Weaviate
+# Instantiate Cohere
 api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
 client_cohere = cohere.Client(api_key_cohere)
+# Create Cohere's chat model and embeddings objects
+cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere, 
+                               model="command-nightly", 
+                               temperature=0, 
+                               echo=True)
+cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
+                                     model="command-light", 
+                                     temperature=0, 
+                                     echo=True)
+cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
+                                     model="embed-english-v3.0")
 
+
+# Instantiate Weaviate
 api_key_weaviate = "XdEHRl1epRJQGFMdTCbgLybatoNC25iSw8mA"
 auth_config = weaviate.AuthApiKey(api_key=api_key_weaviate)
 
 client_weaviate = weaviate.Client(
-    url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
-    auth_client_secret=auth_config,  
-    timeout_config=(5, 15), 
-    additional_headers={  
-        "X-Cohere-Api-Key": api_key_cohere,   
-    }
+  url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
+  auth_client_secret=auth_config,  
+  timeout_config=(5, 15), 
+  additional_headers={  
+    "X-Cohere-Api-Key": api_key_cohere,   
+  }
 )
-
-# Create Cohere's chat model and embeddings objects
-cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere)
-cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere)
-rag = CohereRagRetriever(llm=cohere_chat_model)
-
-# def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
-    
-#     # print('Inside retrival function')
-#     # print(f'Company names: {company_names}')
-
-#     response = (
-#         client_weaviate.query
-#         .get("SECSavvyNow", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
-#         .with_near_text({"concepts": [query],
-#                         "distance": max_distance})
-#         .with_where({
-#             "path": ["companyName"],
-#             "operator": "ContainsAny",
-#             "valueText": company_names
-#         })
-#         # .with_additional(["distance"])
-#         .with_limit(top_n)
-#         .do()
-#     )
-    
-#     # print(f'Response: {response}')
-    
-#     #return response['data']['Get']['Test']
-#     return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['SECSavvyNow']]
-
-def rag(user_query, comp_names):
-    
-    # print('Inside rag function')
-    
-    # get top relevant documents
-    input_docs = retrieve_top_documents(query=user_query, company_names=comp_names)
-
-    # print(f'User Query: {user_query}')
-    # print(f'Input Docs: {input_docs}')
-    docs = rag.get_relevant_documents(
-        user_query,
-        source_documents=input_docs,
-    )
-    # Print the documents
-    # for doc in docs[:-1]:
-    #     print(doc.metadata)
-    #     print("\n\n" + doc.page_content)
-    #     print("\n\n" + "-" * 30 + "\n\n")
-    
-    # Print the final generation 
-    answer = docs[-1].page_content
-    citations = docs[-1].metadata['citations']
-    
-    return answer, citations
 
 def prefill_prompts(action, choice):
     
@@ -255,7 +214,7 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        answer, citations = rag(prompt_msg, [company])
+        answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
         message_placeholder.markdown(answer)
