@@ -17,8 +17,6 @@ import numpy as np
 import pandas as pd
 import extra
 
-os.environ['CURL_CA_BUNDLE'] = 'Zscaler Root CA.cer'
-
 # Instantiate Cohere and Weaviate
 api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
 client_cohere = cohere.Client(api_key_cohere)
@@ -39,6 +37,7 @@ client_weaviate = weaviate.Client(
 cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere)
 cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere)
 rag = CohereRagRetriever(llm=cohere_chat_model)
+
 
 # print(client_weaviate.schema.get())
 
@@ -73,7 +72,7 @@ def rag(user_query, comp_names):
     
     # get top relevant documents
     input_docs = retrieve_top_documents(user_query, company_names=comp_names)
-        
+
     # print(f'User Query: {user_query}')
     # print(f'Input Docs: {input_docs}')
     docs = rag.get_relevant_documents(
@@ -175,6 +174,7 @@ st.markdown(custom_css, unsafe_allow_html=True)
 #298319 dark green
 
 st.markdown("<h2 style='text-align: center; color: black;'>SECSavvyNOW</h2>", unsafe_allow_html=True)
+
 with st.sidebar:
     columns = st.columns([0.1, 0.9])
     with columns[0]:
@@ -196,6 +196,7 @@ if clear_chat:
 
 if feature == 'Summarize':
     st.markdown("<h5 style='text-align: center; color: gray;'>Choose the section you want to summarize.</h5>", unsafe_allow_html=True)
+
     # choice = pills(label='Summarize Options', options=extra.summary_sections, label_visibility='collapsed', index=None)
     buttons = []
     columns = st.columns(2)
@@ -246,6 +247,7 @@ for message in st.session_state.messages:
 if choice is not None:
     prefill_prompts(feature, choice)
 
+
 # Chat interface
 if prompt_msg := st.chat_input("Ask a follow-up question..."):
     st.session_state.messages.append({"role": "user", "content": prompt_msg})
@@ -256,5 +258,6 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
         message_placeholder = st.empty()
         answer, citations = rag(prompt_msg, [company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
+        #message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
+        message_placeholder.markdown(answer)
         # st.write(df)st.table(df)
