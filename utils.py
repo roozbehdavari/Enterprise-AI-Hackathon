@@ -251,7 +251,8 @@ def is_document_relevant_extractive_summary(document: Document,
 def rag(user_query: str, 
         chat_history: str, 
         user_persona: str = 'Individual Investor', 
-        company_names: List[str] = ['UNITEDHEALTH GROUP INC']) -> Tuple[str, List[str]]:
+        company_names: List[str] = ['UNITEDHEALTH GROUP INC']
+        ) -> Tuple[str, List[str]]:
     """
     Retrieve an answer and citations related to the given user query using Cohere's RAG model.
 
