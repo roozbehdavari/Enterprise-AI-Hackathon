@@ -2,7 +2,7 @@ from sec_api import QueryApi
 import json
 
 queryApi = QueryApi(
-    api_key="9fd095d1ce0b318ba235178913821465708b428dcfc54fe40022d774ee702959")
+    api_key="")
 
 base_query = {
     "query": {
@@ -47,16 +47,7 @@ for ticker in ticker_symbols:
                 "AND NOT formType:\"NT 10-K\" " + "AND NOT formType:\"10-K/A\" " + \
                 "AND filedAt:[2023-01-01 TO 2023-12-31]"
 
-  # set new query universe for year-month combination
   base_query["query"]["query_string"]["query"] = universe_query
-
-  # paginate through results by increasing "from" parameter
-  # until we don't find any matches anymore
-  # uncomment next line to fetch all 10,000 filings
-  # for from_batch in range(0, 9800, 200):
-  #for from_batch in range(0, 400, 200):
-  # set new "from" starting position of search
-  #  base_query["from"] = from_batch
 
   response = queryApi.get_filings(base_query)
 

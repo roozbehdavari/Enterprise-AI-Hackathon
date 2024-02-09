@@ -3,9 +3,8 @@ import openai
 import re
 from sec_api import ExtractorApi
 
-#api_key = "625d70b724724eb185a96e965d1a7292"
 extractorApi = ExtractorApi(
-    '9fd095d1ce0b318ba235178913821465708b428dcfc54fe40022d774ee702959')
+    '')
 
 
 # Function to generate a section
