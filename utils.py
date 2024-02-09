@@ -382,7 +382,21 @@ def rag_with_webSearch(user_query: str,
         user_query = generate_user_query(combined_history)
 
     # Retrieve top relevant documents
-    input_docs = retrieve_top_documents(user_query, company_names=company_names)
+    if len(company_names) > 1:
+        # Creating company specific query
+        user_queries = generate_comparison_new_queries(user_query)
+        # Match the query and the company name
+        matched_pairs = match_company_to_generated_query(queries=user_queries, company_names=company_names)
+        print(matched_pairs)
+        input_docs = []
+        for pair in matched_pairs:
+            company_name = pair['company_name']
+            company_query = pair['query']
+            query_docs = retrieve_top_documents(company_query, company_names=[company_name], top_n=10)
+            print([x.metadata['source'] for x in query_docs])
+            input_docs += query_docs
+    else:
+        input_docs = retrieve_top_documents(user_query, company_names=company_names)
     
     # Check if input_docs is empty
     if not input_docs:
