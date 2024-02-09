@@ -171,7 +171,7 @@ with st.sidebar:
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
     if feature == 'Compare':
-        choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
+        choice = st.multiselect(label='Select up to two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
 
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
