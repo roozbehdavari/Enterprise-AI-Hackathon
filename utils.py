@@ -96,6 +96,39 @@ def retrieve_top_documents(
     return documents
 
 
+def match_company_to_generated_query(company_names: List[str], queries: List[str]) -> List[Dict[str, str]]:
+    """
+    Matches each company name to its most relevant query based on partial matches,
+    using regular expressions for flexible matching. Returns a list of dictionaries
+    with each dictionary containing a company name and its matched query.
+    
+    Args:
+        company_names (List[str]): A list of company names.
+        queries (List[str]): A list of queries.
+    
+    Returns:
+        List[Dict[str, str]]: A list of dictionaries, where each dictionary has 'company_name'
+                              and 'query' keys representing matched pairs.
+    """
+    matched_pairs = []
+
+    for company_name in company_names:
+        # Remove common suffixes and split by spaces and non-word characters for flexible matching
+        pattern_parts = re.split(r'\s+|,|\.', company_name)
+        pattern = r'.*'.join(re.escape(part) for part in pattern_parts if part.lower() not in ['inc', 'com', 'corp', 'group', ''])
+        
+        # Compile regex pattern to match case-insensitively
+        regex_pattern = re.compile(pattern, re.IGNORECASE)
+
+        for query in queries:
+            # If the regex pattern matches the query, add as a dictionary to matched_pairs
+            if regex_pattern.search(query):
+                matched_pairs.append({'company_name': company_name, 'query': query})
+                break  # Assuming one company name matches to one query uniquely
+
+    return matched_pairs
+
+
 def generate_user_query(chat_history: str, 
                         model: ChatCohere = cohere_chat_model_light
                     ) -> str:
