@@ -19,7 +19,7 @@ from typing import List, Tuple, Optional
 
 
 # Cohere Instantiation
-api_key_cohere = "xxxxxx"
+api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
 client_cohere = cohere.Client(api_key_cohere)
 
 # Create Cohere's chat model and embeddings objects
@@ -36,7 +36,7 @@ cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere,
 
 
 # Weaviate Instantiation
-api_key_weaviate = "xxxxxxxxxx"
+api_key_weaviate = "XdEHRl1epRJQGFMdTCbgLybatoNC25iSw8mA"
 auth_config = weaviate.AuthApiKey(api_key=api_key_weaviate)
 
 client_weaviate = weaviate.Client(
