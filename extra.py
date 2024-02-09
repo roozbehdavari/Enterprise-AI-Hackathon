@@ -18,7 +18,7 @@ fin_questions = [
     "How does the company plan to grow in the upcoming year(s), including specific strategies or investments?​​",
     "What is the company's liquidity position and its ability to cover short-term obligations?​​​",
     "What is the company's debt level and the details of major debt instruments, including terms and maturity dates?​",
-    "Are there any notable changes in accounting policies or estimates that could impact financial statements?​",
+    "Are there significant changes in accounting policies or estimates affecting financial statements?​",
 ]
 
 sales_questions = [
