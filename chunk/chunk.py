@@ -1,26 +1,44 @@
-from file_utils import *
+# ##################################################################### 
+# Reads a list of extracted SEC filings. 
+# Chunks into pages based on aggregating sentences.
+# Uses GPT Chat to generate per-page summaries and extract key points.   
+# Exports back to text for additional processing.
+# 
+# #####################################################################
 
+# import libraries
 import copy
+from datetime import datetime
 from itertools import chain
 import json
 from nltk.tokenize import regexp_tokenize, wordpunct_tokenize, blankline_tokenize
 from openai import AzureOpenAI
-
-import spacy
-from spacy.lang.en import English
-
+import os
+import pathlib
 import re
 import requests
+import spacy
+from spacy.lang.en import English
+import sys
 import time
 import warnings
-from datetime import datetime
 
+
+# import local tools
+utils = os.path.join(pathlib.Path(__file__).parent.parent.resolve(),"utils")
+sys.path.insert(1, utils)
+from file_utils import *
+
+
+# global setup
 nlp = spacy.load('en_core_web_sm')
 
 secrets = {}
-secrets_file = './hackathon_secrets'
+secrets_file = 'hackathon_secrets'
 with open(secrets_file) as f:
 	secrets = json.load(f)
+exit()
+
 
 # GPT summarization
 def call_chatGpt(prompt, context):
@@ -40,9 +58,6 @@ def call_chatGpt(prompt, context):
 		])
 	
 	return response
-
-
-
 
 def segment_text(text):
 	pages = [[]]
@@ -147,6 +162,12 @@ def process(text):
 	return response
 
 
+
+# ########################################################################
+# Takes a path rather than walking a directory for simple parallelization.
+# Usage: 
+# > python3 ./chunk/chunk.py path_to_filelist
+# ########################################################################
 if __name__ == "__main__":
 	for arg in sys.argv:
 		print(arg)

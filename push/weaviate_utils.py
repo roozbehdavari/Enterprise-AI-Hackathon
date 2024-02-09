@@ -1,15 +1,29 @@
+# ##################################################################################### 
+# Reads a list of processed SEC filings. 
+# Pushes to Weaviate Vector DB. Records are approximately 1 sentence plus metadata.
+# 
+# #####################################################################################
+
+# import libraries
 from datetime import datetime
 import cohere
-from file_utils import *
 import json
 import os
+import path
 import requests
-from ssl_utils import *
 import sys
 from typing import List, Dict, Any
 import weaviate
 from weaviate.exceptions import SchemaValidationException
 
+# Update path, then import local tools
+utils = os.path.join(pathlib.Path(__file__).parent.parent.resolve(),"utils")
+sys.path.insert(1, utils)
+
+from file_utils import *
+from ssl_utils import *
+
+# global setup
 secrets = {}
 secrets_file = './hackathon_secrets'
 with open(secrets_file) as f:
@@ -51,7 +65,6 @@ def check_import(client, class_name, filing_type):
 			"operator": "Equal",
 			"valueText": filing_type}) \
 		.do()
-
 	prettyprint(response)
 
 def cleanup(client, class_name, company_name):
@@ -262,7 +275,11 @@ def import_data_to_WEAVIATE(client: 'weaviate.client.Client',
 						class_name=class_name
 					)
 
-
+# ########################################################################
+# Takes a path rather than walking a directory for simple parallelization.
+# Usage: 
+# > python3 ./push/weaviate.py path_to_filelist
+# ########################################################################
 if __name__ == "__main__":
 	for arg in sys.argv:
 		print(arg)
@@ -273,13 +290,14 @@ if __name__ == "__main__":
 	with no_ssl_verification():
 		clients = init()	
 		class_name="SECSavvyNOW"
-		# class_name = "eh_test"
-		# filing_type="10-K"
-		# company_name = "Apple Inc."
 
-		# create_WEAVIATE_class(clients["weaviate"], class_name)
-		# some_objects = clients["weaviate"].data_object.get()
-		# print(json.dumps(some_objects, indent=4))
 		import_data_to_WEAVIATE(client=clients["weaviate"], data_folder=in_path, filenames=filenames, class_name=class_name)
+
+		# Sample usage of other calls
+		# filing_type="10-Q"
+		# company_name = "Apple Inc."
+		# create_WEAVIATE_class(clients["weaviate"], class_name)
+    	# some_objects = clients["weaviate"].data_object.get()
+		# print(json.dumps(some_objects, indent=4))
 		# cleanup(clients["weaviate"], class_name, company_name)
 		# check_import(clients["weaviate"], class_name, filing_type)
