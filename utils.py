@@ -293,7 +293,7 @@ def rag(user_query: str,
     chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
     answer = chain.invoke({"context": relevant_docs})
     sources = list(set([x.metadata['source'] for x in relevant_docs]))
-    search_type = "Grounded"
+    search_type = "Grounded Search"
     
     return answer, sources, search_type
 
@@ -360,7 +360,7 @@ def rag_with_webSearch(user_query: str,
             chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
             answer = chain.invoke({"context": relevant_docs})
             sources = list(set([x.metadata['source'] for x in relevant_docs]))
-            search_type = "Grounded"
+            search_type = "Grounded Search"
     
     # Check if docs is empty
     if not answer:
