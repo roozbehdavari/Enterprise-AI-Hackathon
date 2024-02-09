@@ -256,7 +256,8 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        answer, citations = rag(prompt_msg, [company])
+        with st.spinner("Fetching the answer..."):
+            answer, citations = rag(prompt_msg, [company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
         message_placeholder.markdown(answer)
