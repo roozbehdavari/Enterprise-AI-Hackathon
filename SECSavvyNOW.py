@@ -190,7 +190,7 @@ if feature == 'Summarize':
             buttons.append(button)
     choice = None if True not in buttons else extra.summary_sections[buttons.index(True)]
 elif feature == 'Questions':
-    st.markdown("<h3 style='text-align: center; color: gray;'>Choose the question you want to explore.</h3>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center; color: gray;'>Choose the question you want to explore.</h5>", unsafe_allow_html=True)
     if persona == 'Sales Representative':
         # choice = st.radio(label='Question Options', options=extra.sales_questions, label_visibility='collapsed', index=None)
         buttons = []
