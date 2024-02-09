@@ -9,7 +9,7 @@ import streamlit as st
 from streamlit_pills import pills
 
 from utils import retrieve_top_documents
-from utils import rag
+from utils import rag, rag_with_webSearch
 
 import requests
 import json
@@ -20,8 +20,6 @@ import extra
 
 import warnings
 warnings.filterwarnings("ignore")
-
-os.environ['CURL_CA_BUNDLE'] = 'Zscaler Root CA.cer'
 
 # Instantiate Cohere
 api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
@@ -161,10 +159,10 @@ with st.sidebar:
         st.image('sparkle_purple.svg')
     with columns[1]:
         st.write('SECSavvyNow by ServiceNow')
-    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
+    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
     if feature == 'Compare':
         choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
@@ -224,10 +222,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-print(choice)
 if choice is not None:
     prefill_prompts(feature, choice, company)
-
 
 # Chat interface
 if prompt_msg := st.chat_input("Ask a follow-up question..."):
@@ -237,9 +233,11 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        with st.spinner("Generating summary..."):
-            answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
+        with st.spinner("Fetching the answer..."):
+            answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
+                                                                user_persona=persona, 
+                                                                company_names=[company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        #message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
-        message_placeholder.markdown(answer)
+        #message_placeholder.markdown(answer)
+        message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
         # st.write(df)st.table(df)
