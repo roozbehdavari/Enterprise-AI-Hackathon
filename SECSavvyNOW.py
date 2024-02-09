@@ -132,14 +132,14 @@ st.markdown(custom_css, unsafe_allow_html=True)
 #1F1F1F BLACK
 #298319 dark green
 
-st.markdown("<h2 style='text-align: center; color: black;'>SECSavvyNOW</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: black;'>SECSavvyNow</h2>", unsafe_allow_html=True)
 
 with st.sidebar:
     columns = st.columns([0.1, 0.9])
     with columns[0]:
         st.image('sparkle_purple.svg')
     with columns[1]:
-        st.write('SECSavvyNOW by ServiceNow')
+        st.write('SECSavvyNow by ServiceNow')
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=1)
