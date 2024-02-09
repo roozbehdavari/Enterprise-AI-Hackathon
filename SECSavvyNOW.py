@@ -140,10 +140,10 @@ with st.sidebar:
         st.image('sparkle_purple.svg')
     with columns[1]:
         st.write('SECSavvyNow by ServiceNow')
-    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
-    company = st.selectbox('Choose a company to analyze.', extra.companies, index=1)
+    company = st.selectbox('Choose a company to analyze.', extra.companies, index=73)
     feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
+    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
     if feature == 'Compare':
         choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
@@ -216,10 +216,10 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        #answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
-        answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
-                                                            user_persona=persona, 
-                                                            company_names=[company])
+        with st.spinner("Fetching the answer..."):
+            answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
+                                                                user_persona=persona, 
+                                                                company_names=[company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(answer)
         message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
