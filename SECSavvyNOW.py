@@ -240,9 +240,10 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         with st.spinner(f'Did you know? {random.choice(extra.fun_facts)}'):
+            company = choice.append(company) if feature == 'Compare' else [company]
             answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
                                                                 user_persona=persona, 
-                                                                company_names=[company])
+                                                                company_names=company)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(answer)
         message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
