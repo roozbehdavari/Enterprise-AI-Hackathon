@@ -15,7 +15,7 @@ fin_questions = [
     "How have the company's primary revenue sources changed in the reporting period?​​",
     "What are the main drivers behind any significant recent changes in the company's cost structure?​​",
     "What are the major risks and uncertainties the company is facing in the near future?​​",
-    "How does the company plan to grow in the upcoming year(s), including specific strategies or investments?​​",
+    "What strategies or investments does the company intend to pursue for growth in the coming year(s)?​",
     "What is the company's liquidity position and its ability to cover short-term obligations?​​​",
     "What is the company's debt level and the details of major debt instruments, including terms and maturity dates?​",
     "Are there significant changes in accounting policies or estimates affecting financial statements?​",
@@ -82,4 +82,17 @@ companies = [
     'UNITEDHEALTH GROUP INC', 'VALERO ENERGY CORP/TX',
     'VERIZON COMMUNICATIONS INC', 'WELLS FARGO & COMPANY/MN',
     'Walgreens Boots Alliance, Inc.', 'Walmart Inc.', 'Walt Disney Co'
+]
+
+fun_facts = [
+    "Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible.",
+    "Cows have best friends and can become stressed when they are separated from them.",
+    "The Eiffel Tower can be 15 cm taller during the summer, due to the expansion of the iron when it's hot.",
+    "Bananas are berries, but strawberries aren't.",
+    "A group of flamingos is called a 'flamboyance.'",
+    "Octopuses have three hearts: two pump blood to the gills, and one pumps it to the rest of the body.",
+    "The shortest war in history was between Britain and Zanzibar on August 27, 1896. Zanzibar surrendered after 38 minutes.",
+    "The inventor of the frisbee was turned into a frisbee. Walter Morrison, the inventor, was cremated, and his ashes were turned into a frisbee after he passed away.",
+    "A group of pandas is called an embarrassment.",
+    "The average person will spend six months of their life waiting for red lights to turn green."
 ]
