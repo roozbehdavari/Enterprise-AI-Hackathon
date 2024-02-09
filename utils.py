@@ -15,7 +15,8 @@ import weaviate
 
 import requests
 import json
-from typing import List, Tuple, Optional
+import re
+from typing import List, Tuple, Optional, Dict
 
 
 # Cohere Instantiation
@@ -94,6 +95,63 @@ def retrieve_top_documents(
             unique_contents.add(page_content)
 
     return documents
+
+
+def generate_comparison_new_queries(user_query: str) -> List[str]:
+    """
+    Generates new queries based on the user's initial query using Cohere's chat API.
+    
+    Args:
+        user_query (str): The initial query provided by the user.
+    
+    Returns:
+        list: A list of new queries generated based on the user's initial query.
+    """
+    # Assuming 'client_cohere' is already initialized Cohere client
+    try:
+        new_queries_results = client_cohere.chat(message=user_query,
+                                                 search_queries_only=True
+                                                )
+        new_queries = [x['text'] for x in new_queries_results.search_queries]
+    except Exception as e:
+        # Handle potential errors from the API call or processing
+        print(f"An error occurred: {e}")
+        new_queries = [user_query]  # Return the initial query
+    
+    return new_queries
+
+
+def match_company_to_generated_query(company_names: List[str], queries: List[str]) -> List[Dict[str, str]]:
+    """
+    Matches each company name to its most relevant query based on partial matches,
+    using regular expressions for flexible matching. Returns a list of dictionaries
+    with each dictionary containing a company name and its matched query.
+    
+    Args:
+        company_names (List[str]): A list of company names.
+        queries (List[str]): A list of queries.
+    
+    Returns:
+        List[Dict[str, str]]: A list of dictionaries, where each dictionary has 'company_name'
+                              and 'query' keys representing matched pairs.
+    """
+    matched_pairs = []
+
+    for company_name in company_names:
+        # Remove common suffixes and split by spaces and non-word characters for flexible matching
+        pattern_parts = re.split(r'\s+|,|\.', company_name)
+        pattern = r'.*'.join(re.escape(part) for part in pattern_parts if part.lower() not in ['inc', 'com', 'corp', 'group', ''])
+        
+        # Compile regex pattern to match case-insensitively
+        regex_pattern = re.compile(pattern, re.IGNORECASE)
+
+        for query in queries:
+            # If the regex pattern matches the query, add as a dictionary to matched_pairs
+            if regex_pattern.search(query):
+                matched_pairs.append({'company_name': company_name, 'query': query})
+                break  # Assuming one company name matches to one query uniquely
+
+    return matched_pairs
 
 
 def generate_user_query(chat_history: str, 
@@ -293,7 +351,7 @@ def rag(user_query: str,
     chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
     answer = chain.invoke({"context": relevant_docs})
     sources = list(set([x.metadata['source'] for x in relevant_docs]))
-    search_type = "Grounded"
+    search_type = "Grounded Search"
     
     return answer, sources, search_type
 
@@ -324,7 +382,21 @@ def rag_with_webSearch(user_query: str,
         user_query = generate_user_query(combined_history)
 
     # Retrieve top relevant documents
-    input_docs = retrieve_top_documents(user_query, company_names=company_names)
+    if len(company_names) > 1:
+        # Creating company specific query
+        user_queries = generate_comparison_new_queries(user_query)
+        # Match the query and the company name
+        matched_pairs = match_company_to_generated_query(queries=user_queries, company_names=company_names)
+        print(matched_pairs)
+        input_docs = []
+        for pair in matched_pairs:
+            company_name = pair['company_name']
+            company_query = pair['query']
+            query_docs = retrieve_top_documents(company_query, company_names=[company_name], top_n=10)
+            print([x.metadata['source'] for x in query_docs])
+            input_docs += query_docs
+    else:
+        input_docs = retrieve_top_documents(user_query, company_names=company_names)
     
     # Check if input_docs is empty
     if not input_docs:
@@ -335,7 +407,7 @@ def rag_with_webSearch(user_query: str,
         # Extract answer and citations
         answer = docs[-1].page_content
         sources = 'Web Search'
-        search_type = 'Web Search'
+        search_type = 'Connector'
     else:
         # Filter relevant documents using the light model
         relevant_docs = []
@@ -352,7 +424,7 @@ def rag_with_webSearch(user_query: str,
             # Extract answer and citations
             answer = docs[-1].page_content
             sources = 'Web Search'
-            search_type = 'Web Search'
+            search_type = 'Connector'
         else:
             # Generate the RAG prompt template
             rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
@@ -360,7 +432,7 @@ def rag_with_webSearch(user_query: str,
             chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
             answer = chain.invoke({"context": relevant_docs})
             sources = list(set([x.metadata['source'] for x in relevant_docs]))
-            search_type = "Grounded"
+            search_type = "Grounded Search"
     
     # Check if docs is empty
     if not answer:

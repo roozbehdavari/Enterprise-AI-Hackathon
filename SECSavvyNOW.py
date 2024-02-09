@@ -171,7 +171,7 @@ with st.sidebar:
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
     if feature == 'Compare':
-        choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
+        choice = st.multiselect(label='Select up to two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
 
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
@@ -240,11 +240,11 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         with st.spinner(f'Did you know? {random.choice(extra.fun_facts)}'):
-            company = choice.append(company) if feature == 'Compare' else [company]
+            company_list = choice.append(company) if feature == 'Compare' else [company]
             answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
                                                                 user_persona=persona, 
-                                                                company_names=company)
+                                                                company_names=company_list)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(answer)
-        message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
+        message_placeholder.markdown(f"Answer: {answer}\n\r Citation:\n\r{search_type}: {citations}")
         # st.write(df)st.table(df)
