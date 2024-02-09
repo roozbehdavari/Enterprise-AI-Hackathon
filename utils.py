@@ -335,7 +335,7 @@ def rag_with_webSearch(user_query: str,
         # Extract answer and citations
         answer = docs[-1].page_content
         sources = 'Web Search'
-        search_type = 'Web Search'
+        search_type = 'Connector'
     else:
         # Filter relevant documents using the light model
         relevant_docs = []
@@ -352,7 +352,7 @@ def rag_with_webSearch(user_query: str,
             # Extract answer and citations
             answer = docs[-1].page_content
             sources = 'Web Search'
-            search_type = 'Web Search'
+            search_type = 'Connector'
         else:
             # Generate the RAG prompt template
             rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
