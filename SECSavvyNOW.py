@@ -55,8 +55,15 @@ def prefill_prompts(action, choice, company):
     if action == None:
         return
     
+    # list of companies
     if type(choice) == list:
         choice = ", ".join(choice)
+        
+    # grammer fix 
+    if action == 'Compare':
+        prefill = f'{prompts[action]} with {company}: {str(choice)}'
+    else:
+        prefill = f'{prompts[action]} for {company}: {str(choice)}'
     
     prompts = {
         'Summarize': 'Summarize the following section',
@@ -69,7 +76,7 @@ def prefill_prompts(action, choice, company):
             function insertText(dummy_var_to_force_repeat_execution) {{
                 var chatInput = parent.document.querySelector('textarea[data-testid="stChatInput"]');
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{prompts[action]} for {company}: {str(choice)}");
+                nativeInputValueSetter.call(chatInput, "{prefill}");
                 var event = new Event('input', {{ bubbles: true}});
                 chatInput.dispatchEvent(event);
             }}
