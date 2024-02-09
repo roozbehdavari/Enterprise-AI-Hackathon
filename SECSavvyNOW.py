@@ -59,17 +59,17 @@ def prefill_prompts(action, choice, company):
     if type(choice) == list:
         choice = ", ".join(choice)
         
-    # grammer fix 
-    if action == 'Compare':
-        prefill = f'{prompts[action]} with {company}: {str(choice)}'
-    else:
-        prefill = f'{prompts[action]} for {company}: {str(choice)}'
-    
     prompts = {
         'Summarize': 'Summarize the following section',
         'Questions': 'Answer the following question',
         'Compare': 'Compare these companies',
     }
+        
+    # grammer fix 
+    if action == 'Compare':
+        prefill = f'{prompts[action]} with {company}: {str(choice)}'
+    else:
+        prefill = f'{prompts[action]} for {company}: {str(choice)}'
 
     js = f"""
         <script>
