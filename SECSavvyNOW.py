@@ -183,7 +183,7 @@ with st.sidebar:
         st.write('SECSavvyNOW by ServiceNow')
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
-    company = st.selectbox('Choose a company to analyze.', extra.companies, index=1)
+    company = st.selectbox('Choose a company to analyze.', extra.companies, index=73)
     feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
     
     if feature == 'Compare':
