@@ -1,7 +1,8 @@
-from langchain.retrievers import ContextualCompressionRetriever, CohereRagRetriever
+from langchain.retrievers import ContextualCompressionRetriever
 from langchain.retrievers.document_compressors import CohereRerank
 from langchain_community.embeddings import CohereEmbeddings
 from langchain_community.chat_models import ChatCohere
+from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.docstore.document import Document
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain.prompts import PromptTemplate
