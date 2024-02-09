@@ -3,93 +3,52 @@ from langchain.retrievers.document_compressors import CohereRerank
 from langchain_community.embeddings import CohereEmbeddings
 from langchain_community.chat_models import ChatCohere
 from langchain.docstore.document import Document
-
 import cohere
 import weaviate
+import streamlit as st
+from streamlit_pills import pills
+
+from utils import retrieve_top_documents
+from utils import rag, rag_with_webSearch
 
 import requests
 import json
 import os
-
-import streamlit as st
-from streamlit_pills import pills
 import numpy as np
 import pandas as pd
 import extra
 
-# Instantiate Cohere and Weaviate
+import warnings
+warnings.filterwarnings("ignore")
+
+# Instantiate Cohere
 api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
 client_cohere = cohere.Client(api_key_cohere)
+# Create Cohere's chat model and embeddings objects
+cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere, 
+                               model="command-nightly", 
+                               temperature=0, 
+                               echo=True)
+cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
+                                     model="command-light", 
+                                     temperature=0, 
+                                     echo=True)
+cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
+                                     model="embed-english-v3.0")
 
+
+# Instantiate Weaviate
 api_key_weaviate = "XdEHRl1epRJQGFMdTCbgLybatoNC25iSw8mA"
 auth_config = weaviate.AuthApiKey(api_key=api_key_weaviate)
 
 client_weaviate = weaviate.Client(
-    url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
-    auth_client_secret=auth_config,  
-    timeout_config=(5, 15), 
-    additional_headers={  
-        "X-Cohere-Api-Key": api_key_cohere,   
-    }
+  url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
+  auth_client_secret=auth_config,  
+  timeout_config=(5, 15), 
+  additional_headers={  
+    "X-Cohere-Api-Key": api_key_cohere,   
+  }
 )
-
-# Create Cohere's chat model and embeddings objects
-cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere)
-cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere)
-
-# print(client_weaviate.schema.get())
-
-def retrieve_top_documents(query, company_names, top_n=10, max_distance=999.0):
-    
-    # print('Inside retrival function')
-    # print(f'Company names: {company_names}')
-
-    response = (
-        client_weaviate.query
-        .get("Test", ["companyName", "span", "filingUrl", "sectionSummary", "chunk"])
-        .with_near_text({"concepts": [query],
-                        "distance": max_distance})
-        .with_where({
-            "path": ["companyName"],
-            "operator": "ContainsAny",
-            "valueText": company_names
-        })
-        # .with_additional(["distance"])
-        .with_limit(top_n)
-        .do()
-    )
-    
-    # print(f'Response: {response}')
-    
-    #return response['data']['Get']['Test']
-    return [Document(page_content=x["chunk"], metadata={"source": x["filingUrl"]})  for x in response['data']['Get']['Test']]
-
-def rag(user_query, comp_names):
-    
-    # print('Inside rag function')
-    
-    # get top relevant documents
-    input_docs = retrieve_top_documents(user_query, company_names=comp_names)
-    
-    # Create the cohere rag retriever using the chat model 
-    rag = CohereRagRetriever(llm=cohere_chat_model)
-    # print(f'User Query: {user_query}')
-    # print(f'Input Docs: {input_docs}')
-    docs = rag.get_relevant_documents(
-        user_query,
-        source_documents=input_docs,
-    )
-    # Print the documents
-    # for doc in docs[:-1]:
-    #     print(doc.metadata)
-    #     print("\n\n" + doc.page_content)
-    #     print("\n\n" + "-" * 30 + "\n\n")
-    
-    # Print the final generation 
-    answer = docs[-1].page_content
-    citations = docs[-1].metadata['citations']
-    
-    return answer, citations
 
 def prefill_prompts(action, choice):
     
@@ -125,41 +84,66 @@ def prefill_prompts(action, choice):
 st.set_page_config(layout="wide")
 if "messages" not in st.session_state:
     st.session_state.messages = []
-    
-m = st.markdown("""
+
+custom_css = """
     <style>
-    div.stButton > button:first-child {
-        background-color: #F9F9FD;
-        border-color: #DBE1E7;
-        color:#368B28;
-        font-size: 48px;
-    }
-    div.stButton > button:hover {
-        background-color: #F5F4F2;
-        border-color: #DBE1E7;
-        color:#368B28;
-        font-size: 48px;
+        .stButton button:first-child {
+            background-color: #F9F9FD;
+            border-color: #DBE1E7;
+            color: #368B28;
+            height: 48px;
         }
-    </style>""", unsafe_allow_html=True)
-    
-choice = None
+        .stButton button:hover {
+            background-color: #F5F4F2;
+            border-color: #DBE1E7;
+            color: #368B28;
+        }
+        head, body, h1, h2, h3, h4, h5, h6, p, span, div {
+            font-family: 'Lato', sans-serif;
+        }
+        p {
+            font-size: 18px;
+        }
+        .st-emotion-cache-16idsys {
+            font-family: "Source Sans Pro", sans-serif;
+            font-size: 30px;
+        }
+    </style>
+"""
+# custom_css = """
+#     <style>
+#         div.stButton button {
+#             background-color: #F9F9FD;
+#             border-color: #DBE1E7;
+#             color: #368B28;
+#             height: 48px;
+#         }
+#         head, body, h1, h2, h3, h4, h5, h6, p, span, div {
+#             font-family: 'Lato', sans-serif;
+#         }
+#         p {
+#             font-size: 18px;
+#         }
+#     </style>
+# """
+st.markdown(custom_css, unsafe_allow_html=True)
 
 #000000 choose a persona, company, feature 20px
+#1F1F1F BLACK
+#298319 dark green
 
-# columns = st.columns(11)  
-# with columns[10]:
-#     clear_chat = st.button('📝', type='primary', help='Restart the chat.')
-st.markdown("<h1 style='text-align: center; color: black;'>SECSavvyNOW</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center; color: black;'>SECSavvyNOW</h2>", unsafe_allow_html=True)
+
 with st.sidebar:
     columns = st.columns([0.1, 0.9])
     with columns[0]:
         st.image('sparkle_purple.svg')
     with columns[1]:
-        st.write('SECSavvyNOW by ServiceNow.')
+        st.write('SECSavvyNOW by ServiceNow')
+    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=1)
     feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
-    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
     if feature == 'Compare':
         choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
@@ -168,15 +152,10 @@ with st.sidebar:
 
 if clear_chat:
     st.session_state.messages = []
-    
-    # 368B28 green 14px lato
-    # 1F1F1F BLACK
-    # F9F9FD gray BACKGROUND
-    # DBE1E7 BORDER
-    # 298319
 
 if feature == 'Summarize':
-    st.markdown("<h2 style='text-align: center; color: gray;'>Choose the section you want to summarize.</h2>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center; color: gray;'>Choose the section you want to summarize.</h5>", unsafe_allow_html=True)
+
     # choice = pills(label='Summarize Options', options=extra.summary_sections, label_visibility='collapsed', index=None)
     buttons = []
     columns = st.columns(2)
@@ -187,7 +166,7 @@ if feature == 'Summarize':
             buttons.append(button)
     choice = None if True not in buttons else extra.summary_sections[buttons.index(True)]
 elif feature == 'Questions':
-    st.markdown("<h2 style='text-align: center; color: gray;'>Choose the question you want to explore.</h2>", unsafe_allow_html=True)
+    st.markdown("<h3 style='text-align: center; color: gray;'>Choose the question you want to explore.</h3>", unsafe_allow_html=True)
     if persona == 'Sales Representative':
         # choice = st.radio(label='Question Options', options=extra.sales_questions, label_visibility='collapsed', index=None)
         buttons = []
@@ -224,12 +203,10 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if choice is not None:        
+if choice is not None:
     prefill_prompts(feature, choice)
 
-# if not summ_choice:
-#     st.empty()
-# else:
+
 # Chat interface
 if prompt_msg := st.chat_input("Ask a follow-up question..."):
     st.session_state.messages.append({"role": "user", "content": prompt_msg})
@@ -238,7 +215,11 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        answer, citations = rag(prompt_msg, [company])
+        #answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
+        answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
+                                                            user_persona=persona, 
+                                                            company_names=[company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        message_placeholder.markdown(answer)
+        #message_placeholder.markdown(answer)
+        message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
         # st.write(df)st.table(df)
