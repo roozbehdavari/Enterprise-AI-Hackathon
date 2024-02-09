@@ -15,7 +15,8 @@ import weaviate
 
 import requests
 import json
-from typing import List, Tuple, Optional
+import re
+from typing import List, Tuple, Optional, Dict
 
 
 # Cohere Instantiation
@@ -94,6 +95,30 @@ def retrieve_top_documents(
             unique_contents.add(page_content)
 
     return documents
+
+
+def generate_comparison_new_queries(user_query: str) -> List[str]:
+    """
+    Generates new queries based on the user's initial query using Cohere's chat API.
+    
+    Args:
+        user_query (str): The initial query provided by the user.
+    
+    Returns:
+        list: A list of new queries generated based on the user's initial query.
+    """
+    # Assuming 'client_cohere' is already initialized Cohere client
+    try:
+        new_queries_results = client_cohere.chat(message=user_query,
+                                                 search_queries_only=True
+                                                )
+        new_queries = [x['text'] for x in new_queries_results.search_queries]
+    except Exception as e:
+        # Handle potential errors from the API call or processing
+        print(f"An error occurred: {e}")
+        new_queries = [user_query]  # Return the initial query
+    
+    return new_queries
 
 
 def match_company_to_generated_query(company_names: List[str], queries: List[str]) -> List[Dict[str, str]]:
