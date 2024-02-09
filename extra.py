@@ -17,7 +17,7 @@ fin_questions = [
     "What are the major risks and uncertainties the company is facing in the near future?​​",
     "How does the company plan to grow in the upcoming year(s), including specific strategies or investments?​​",
     "What is the company's liquidity position and its ability to cover short-term obligations?​​​",
-    "What is the extent of the company's debt, and what are the terms and maturity dates of major debt instruments?​",
+    "What is the company's debt level and the details of major debt instruments, including terms and maturity dates?​",
     "Are there any notable changes in accounting policies or estimates that could impact financial statements?​",
 ]
 
