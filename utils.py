@@ -299,10 +299,10 @@ def rag(user_query: str,
 
 
 def rag_with_webSearch(user_query: str, 
-        chat_history: str = None, 
-        user_persona: str = 'Individual Investor', 
-        company_names: List[str] = ['UNITEDHEALTH GROUP INC']
-        ) -> Tuple[str, List[str]]:
+                       chat_history: str = None, 
+                       user_persona: str = 'Individual Investor', 
+                       company_names: List[str] = ['UNITEDHEALTH GROUP INC']
+                       ) -> Tuple[str, List[str]]:
     """
     Retrieve an answer and citations related to the given user query using Cohere's RAG model.
     Web Search is used a fallback search mechanism. 
@@ -363,8 +363,8 @@ def rag_with_webSearch(user_query: str,
             search_type = "Grounded"
     
     # Check if docs is empty
-    if not docs:
-        return "No relevant information found. Please try again later.", []
+    if not answer:
+        return "No relevant information found. Please try again later.", [], ''
 
     return answer, sources, search_type
     
