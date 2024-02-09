@@ -299,10 +299,10 @@ def rag(user_query: str,
 
 
 def rag_with_webSearch(user_query: str, 
-                       chat_history: str = None, 
-                       user_persona: str = 'Individual Investor', 
-                       company_names: List[str] = ['UNITEDHEALTH GROUP INC']
-                      ) -> Tuple[str, List[str]]:
+        chat_history: str = None, 
+        user_persona: str = 'Individual Investor', 
+        company_names: List[str] = ['UNITEDHEALTH GROUP INC']
+        ) -> Tuple[str, List[str]]:
     """
     Retrieve an answer and citations related to the given user query using Cohere's RAG model.
     Web Search is used a fallback search mechanism. 
@@ -326,20 +326,45 @@ def rag_with_webSearch(user_query: str,
     # Retrieve top relevant documents
     input_docs = retrieve_top_documents(user_query, company_names=company_names)
     
-    # Filter relevant documents using the light model
-    relevant_docs = []
-    for doc in input_docs:
-        doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
-        if doc_relevancy_summary:
-            relevant_docs.append(doc_relevancy_summary)
+    # Check if input_docs is empty
+    if not input_docs:
+        # Fall back to web search with user_persona and company_names included in the query
+        search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
+        rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
+        docs = rag_retriever.get_relevant_documents(search_query)
+        # Extract answer and citations
+        answer = docs[-1].page_content
+        sources = 'Web Search'
+        search_type = 'Web Search'
+    else:
+        # Filter relevant documents using the light model
+        relevant_docs = []
+        for doc in input_docs:
+            doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
+            if doc_relevancy_summary:
+                relevant_docs.append(doc_relevancy_summary)
+        # Check if relevant_docs is empty
+        if not relevant_docs:
+            # Fall back to web search with user_persona and company_names included in the query
+            search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
+            rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
+            docs = rag_retriever.get_relevant_documents(search_query)
+            # Extract answer and citations
+            answer = docs[-1].page_content
+            sources = 'Web Search'
+            search_type = 'Web Search'
+        else:
+            # Generate the RAG prompt template
+            rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
+            # Generate the Response
+            chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
+            answer = chain.invoke({"context": relevant_docs})
+            sources = list(set([x.metadata['source'] for x in relevant_docs]))
+            search_type = "Grounded"
     
-    # Generate the RAG prompt template
-    rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
-    
-    # Generate the Response
-    chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
-    answer = chain.invoke({"context": relevant_docs})
-    sources = list(set([x.metadata['source'] for x in relevant_docs]))
-    search_type = "Grounded"
-    
+    # Check if docs is empty
+    if not docs:
+        return "No relevant information found. Please try again later.", []
+
     return answer, sources, search_type
+    
