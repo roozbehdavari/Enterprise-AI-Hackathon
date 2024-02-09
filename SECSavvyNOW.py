@@ -9,7 +9,7 @@ import streamlit as st
 from streamlit_pills import pills
 
 from utils import retrieve_top_documents
-from utils import rag
+from utils import rag, rag_with_webSearch
 
 import requests
 import json
@@ -216,8 +216,11 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
+        #answer, citations = rag(user_query=prompt_msg, user_persona=persona, company_names=[company])
+        answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
+                                                            user_persona=persona, 
+                                                            company_names=[company])
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        #message_placeholder.markdown(f"Answer: {answer}\nCitation:{citations}")
-        message_placeholder.markdown(answer)
+        #message_placeholder.markdown(answer)
+        message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
         # st.write(df)st.table(df)
