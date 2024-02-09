@@ -170,13 +170,13 @@ def generate_rag_prompt_template(
         f"User Query: {user_query}\n"
         f"Context: Analyzing 10-K and 10-Q reports of companies: {', '.join(company_names)}.\n"
         "source_documents: \n"
-        "{source_documents}"
+        "{context}"
         f"{persona_requests.get(user_persona, ' Please generate a detailed analysis based on the information extracted from the reports.')}"
     )
 
     # Creating Prompt object
     PROMPT = PromptTemplate(
-        template=prompt_template, input_variables=["source_documents"]
+        template=prompt_template, input_variables=["context"]
     )
 
     return PROMPT
