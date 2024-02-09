@@ -295,3 +295,50 @@ def rag(user_query: str,
     search_type = "Grounded"
     
     return answer, sources, search_type
+
+
+def rag_with_webSearch(user_query: str, 
+                       chat_history: str = None, 
+                       user_persona: str = 'Individual Investor', 
+                       company_names: List[str] = ['UNITEDHEALTH GROUP INC']
+                      ) -> Tuple[str, List[str]]:
+    """
+    Retrieve an answer and citations related to the given user query using Cohere's RAG model.
+    Web Search is used a fallback search mechanism. 
+
+    Args:
+        user_query (str): The user query for which the answer is sought.
+        chat_history (str): The chat history containing the conversation context.
+        user_persona (str, optional): The persona of the user (e.g., Individual Investor, Financial Analyst, Sales Representative). Defaults to 'Individual Investor'.
+        company_names (list of str, optional): List of company names being analyzed. Defaults to ['UNITEDHEALTH GROUP INC'].
+
+    Returns:
+        tuple: A tuple containing the answer text and a list of citations.
+    """
+
+    # If chat_history is not empty, refine the user query
+    if chat_history:
+        # Append the user query to the chat history
+        combined_history = f"{chat_history}\n{user_query}"
+        user_query = generate_user_query(combined_history)
+
+    # Retrieve top relevant documents
+    input_docs = retrieve_top_documents(user_query, company_names=company_names)
+    
+    # Filter relevant documents using the light model
+    relevant_docs = []
+    for doc in input_docs:
+        doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
+        if doc_relevancy_summary:
+            relevant_docs.append(doc_relevancy_summary)
+    
+    # Generate the RAG prompt template
+    rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
+    
+    # Generate the Response
+    chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
+    answer = chain.invoke({"context": relevant_docs})
+    sources = list(set([x.metadata['source'] for x in relevant_docs]))
+    search_type = "Grounded"
+    
+    return answer, sources, search_type
