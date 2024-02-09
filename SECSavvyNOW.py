@@ -245,5 +245,5 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
             print(citations, search_type)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(answer)
-        message_placeholder.markdown(f"Answer: {answer}\n\r Citation:{citations} Search Type:{search_type}")
+        message_placeholder.markdown(f"Answer: {answer}\n\r Citation:{search_type}: {citations}")
         # st.write(df)st.table(df)
