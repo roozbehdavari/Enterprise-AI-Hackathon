@@ -241,7 +241,7 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
         message_placeholder = st.empty()
         with st.spinner(f'Did you know? {random.choice(extra.fun_facts)}'):
             company_list = choice.append(company) if feature == 'Compare' else [company]
-            print(f"company: {company} choice: {choice}")
+            st.markdown(f"company: {company} choice: {choice}")
             answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
                                                                 user_persona=persona, 
                                                                 company_names=company_list)
