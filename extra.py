@@ -1,35 +1,35 @@
 investor_questions = [
-    "What is the company's revenue trend over the past few quarters or years?​",
-    "How profitable is the company? What are the profit margins?",
-    "What are the company's major sources of revenue, and how diversified is its revenue base?​",
+    "What's the company's revenue trend in recent quarters/years?​",
+    "How profitable is the company, and what are its profit margins?",
+    "What are the major sources of the company's revenue, and how diversified is its revenue base?​​",
     "What are the company's current assets and liabilities?​",
     "What is the company's debt situation?​",
     "What are the key risks the company faces?​",
-    "Has the company made any significant acquisitions or divestitures recently?​",
-    "Are there any legal or regulatory proceedings the company is involved in?​",
+    "Are there any recent significant acquisitions or divestitures by the company?​",
+    "Are there ongoing legal or regulatory proceedings involving the company? ​",
     "What are the company's future outlook and strategic plans?​",
-    "Have there been any recent significant events or changes that investors should be aware of?​"
+    "Are there any recent significant events or changes investors should be aware of?​"
 ]
 
 fin_questions = [
-    "What are the company's primary sources of revenue, and how have they changed over the reporting period?​​",
-    "Has the company's cost structure changed significantly in the recent period? What are the main drivers of these changes?​",
-    "What are the significant risks and uncertainties facing the company in the near future?​​",
-    "How does the company plan to grow its business in the upcoming year(s)? Are there any specific strategies or investments mentioned?​",
-    "What is the company's liquidity position, and does it have sufficient resources to cover its short-term obligations?​​",
-    "How much debt does the company have, and what are the terms and maturity dates of the major debt instruments?​​",
-    "Have there been any significant changes in accounting policies or estimates that could affect the financial statements?​​",
+    "How have the company's primary revenue sources changed in the reporting period?​​",
+    "What are the main drivers behind any significant recent changes in the company's cost structure?​​",
+    "What are the major risks and uncertainties the company is facing in the near future?​​",
+    "How does the company plan to grow in the upcoming year(s), including specific strategies or investments?​​",
+    "What is the company's liquidity position and its ability to cover short-term obligations?​​​",
+    "What is the extent of the company's debt, and what are the terms and maturity dates of major debt instruments?​",
+    "Are there any notable changes in accounting policies or estimates that could impact financial statements?​",
 ]
 
 sales_questions = [
-    "What challenges or risks is the company currently facing, especially related to technology and operations?​​",
-    "Is the company undergoing any significant digital transformation or IT infrastructure upgrades?​",
-    "Are there any recent strategic shifts or new initiatives that might require advanced IT support or workflow optimization?​​",
-    "How does the company plan to address its operational inefficiencies or improve productivity?​​",
-    "What investments is the company making in cybersecurity, compliance, and risk management?​​",
-    "Is there evidence of the company expanding or investing in customer service and experience?​​",
-    "What are the company's plans regarding supply chain management and vendor relationships?​​",
-    "How does the company's financial health (revenue trends, capex, R&D investment) align with potential investments in IT and operational improvements?​"
+    "What current challenges does the company face in technology and operations?",
+    "Is there a notable digital transformation or IT upgrades in progress?​",
+    "Any recent strategic shifts demanding advanced IT support or workflow optimization?",
+    "How does the company intend to address operational inefficiencies and boost productivity?",
+    "What investments are allocated to cybersecurity, compliance, and risk management?",
+    "Is there evidence  of the company expanding or investing in customer service?​​",
+    "What are the plans for supply chain management and vendor relationships?​",
+    "How does the company's financial health align with potential IT and operational investments?​​"
 ]
 
 summary_sections = [
