@@ -242,7 +242,8 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
             answer, citations, search_type = rag_with_webSearch(user_query=prompt_msg, 
                                                                 user_persona=persona, 
                                                                 company_names=[company])
+            print(citations, search_type)
         st.session_state.messages.append({"role": "assistant", "content": answer})
         #message_placeholder.markdown(answer)
-        message_placeholder.markdown(f"Answer: {answer}\n Citation:{citations}\n Search Type:{search_type}")
+        message_placeholder.markdown(f"Answer: {answer}\n\r Citation:{citations}\n\r Search Type:{search_type}")
         # st.write(df)st.table(df)
