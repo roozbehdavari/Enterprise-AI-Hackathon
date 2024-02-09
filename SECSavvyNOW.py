@@ -50,7 +50,7 @@ client_weaviate = weaviate.Client(
   }
 )
 
-def prefill_prompts(action, choice):
+def prefill_prompts(action, choice, company):
     
     if action == None:
         return
@@ -59,9 +59,9 @@ def prefill_prompts(action, choice):
         choice = ", ".join(choice)
     
     prompts = {
-        'Summarize': 'Summarize the following section: ',
-        'Questions': 'Answer the following question: ',
-        'Compare': 'Compare these companies: ',
+        'Summarize': 'Summarize the following section',
+        'Questions': 'Answer the following question',
+        'Compare': 'Compare these companies',
     }
 
     js = f"""
@@ -69,7 +69,7 @@ def prefill_prompts(action, choice):
             function insertText(dummy_var_to_force_repeat_execution) {{
                 var chatInput = parent.document.querySelector('textarea[data-testid="stChatInput"]');
                 var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, "value").set;
-                nativeInputValueSetter.call(chatInput, "{prompts[action]+str(choice)}");
+                nativeInputValueSetter.call(chatInput, "{prompts[action]} for {company}: {str(choice)}");
                 var event = new Event('input', {{ bubbles: true}});
                 chatInput.dispatchEvent(event);
             }}
@@ -85,38 +85,24 @@ st.set_page_config(layout="wide")
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-custom_css = """
-    <style>
-        .stButton button:first-child {
-            background-color: #F9F9FD;
-            border-color: #DBE1E7;
-            color: #368B28;
-            height: 48px;
-        }
-        .stButton button:hover {
-            background-color: #F5F4F2;
-            border-color: #DBE1E7;
-            color: #368B28;
-        }
-        head, body, h1, h2, h3, h4, h5, h6, p, span, div {
-            font-family: 'Lato', sans-serif;
-        }
-        p {
-            font-size: 18px;
-        }
-        .st-emotion-cache-16idsys {
-            font-family: "Source Sans Pro", sans-serif;
-            font-size: 30px;
-        }
-    </style>
-"""
 # custom_css = """
 #     <style>
-#         div.stButton button {
+#         section.stSidebar .stButton button {
+#                 background-color: #298319;
+#                 border-color: #DBE1E7;
+#                 color: #368B28;
+#                 height: 48px;
+#         }
+#         .stButton button:first-child {
 #             background-color: #F9F9FD;
 #             border-color: #DBE1E7;
 #             color: #368B28;
 #             height: 48px;
+#         }
+#         .stButton button:hover {
+#             background-color: #F5F4F2;
+#             border-color: #DBE1E7;
+#             color: #368B28;
 #         }
 #         head, body, h1, h2, h3, h4, h5, h6, p, span, div {
 #             font-family: 'Lato', sans-serif;
@@ -126,6 +112,39 @@ custom_css = """
 #         }
 #     </style>
 # """
+#368B28 theme primary color
+custom_css = """
+    <style>
+        .st-emotion-cache-bgrkbf {
+            background-color: #F9F9FD;
+            border-color: #DBE1E7;
+            color: #368B28;
+            height: 48px;
+        }
+        .st-emotion-cache-bgrkbf:hover {
+            background-color: #F5F4F2;
+            border-color: #DBE1E7;
+            color: #368B28;
+            height: 48px;
+        }
+        .st-emotion-cache-lxjuph {
+            background-color: #298319;
+            border-color: #3A3F51;
+            color: #FFFFFF;
+        }
+        .st-emotion-cache-lxjuph:hover {
+            background-color: #5DB14E;
+            border-color: #3A3F51;
+            color: #FFFFFF;
+        }
+        .pill {
+            font-size: 14px;
+        }
+        .st-emotion-cache-16idsys p {
+            font-size: 16px;
+        }
+    </style>
+"""
 st.markdown(custom_css, unsafe_allow_html=True)
 
 #000000 choose a persona, company, feature 20px
@@ -141,7 +160,7 @@ with st.sidebar:
     with columns[1]:
         st.write('SECSavvyNow by ServiceNow')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
-    company = st.selectbox('Choose a company to analyze.', extra.companies, index=73)
+    company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
@@ -203,10 +222,8 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-print(choice)
 if choice is not None:
-    prefill_prompts(feature, choice)
-
+    prefill_prompts(feature, choice, company)
 
 # Chat interface
 if prompt_msg := st.chat_input("Ask a follow-up question..."):
