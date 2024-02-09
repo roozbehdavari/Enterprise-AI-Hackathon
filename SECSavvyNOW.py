@@ -65,7 +65,7 @@ def prefill_prompts(action, choice, company):
         'Compare': 'Compare these companies',
     }
         
-    # grammer fix 
+    # grammar fix 
     if action == 'Compare':
         prefill = f'{prompts[action]} with {company}: {str(choice)}'
     else:
@@ -168,7 +168,7 @@ with st.sidebar:
         st.write('SECSavvyNow by ServiceNow')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
-    feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
+    feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
     
     if feature == 'Compare':
