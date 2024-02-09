@@ -1,0 +1,688 @@
+[
+  {
+    "companyName": "ServiceNow, Inc.",
+    "ticker": "NOW",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1373715/000137371523000035/now-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-30T17:43:36-05:00"
+  }
+,
+  {
+    "companyName": "Walmart Inc.",
+    "ticker": "WMT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/104169/000010416923000020/wmt-20230131.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-17T17:02:59-04:00"
+  }
+,
+  {
+    "companyName": "AMAZON COM INC",
+    "ticker": "AMZN",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1018724/000101872423000004/amzn-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-02T18:27:34-05:00"
+  }
+,
+  {
+    "companyName": "Apple Inc.",
+    "ticker": "AAPL",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/320193/000032019323000106/aapl-20230930.htm",
+    "formType": "10-K",
+    "filedAt": "2023-11-02T18:08:27-04:00"
+  }
+,
+  {
+    "companyName": "CVS HEALTH Corp",
+    "ticker": "CVS",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/64803/000006480323000009/cvs-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-08T06:37:38-05:00"
+  }
+,
+  {
+    "companyName": "UNITEDHEALTH GROUP INC",
+    "ticker": "UNH",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/731766/000073176623000008/unh-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-24T17:28:40-05:00"
+  }
+,
+  {
+    "companyName": "EXXON MOBIL CORP",
+    "ticker": "XOM",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/34088/000003408823000020/xom-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-22T16:37:14-05:00"
+  }
+,
+  {
+    "companyName": "BERKSHIRE HATHAWAY INC",
+    "ticker": "BRK.B",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1067983/000095017023004451/brka-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-27T06:04:49-05:00"
+  }
+,
+  {
+    "companyName": "MCKESSON CORP",
+    "ticker": "MCK",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/927653/000092765323000038/mck-20230331.htm",
+    "formType": "10-K",
+    "filedAt": "2023-05-08T17:46:40-04:00"
+  }
+,
+  {
+    "companyName": "COSTCO WHOLESALE CORP /NEW",
+    "ticker": "COST",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/909832/000090983223000042/cost-20230903.htm",
+    "formType": "10-K",
+    "filedAt": "2023-10-10T19:13:15-04:00"
+  }
+,
+  {
+    "companyName": "Cigna Group",
+    "ticker": "CI",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1739940/000173994023000008/ci-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T13:11:26-05:00"
+  }
+,
+  {
+    "companyName": "AT&T INC.",
+    "ticker": "T",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/732717/000073271723000011/t-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-13T16:11:56-05:00"
+  }
+,
+  {
+    "companyName": "MICROSOFT CORP",
+    "ticker": "MSFT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/789019/000095017023035122/msft-20230630.htm",
+    "formType": "10-K",
+    "filedAt": "2023-07-27T16:01:56-04:00"
+  }
+,
+  {
+    "companyName": "CARDINAL HEALTH INC",
+    "ticker": "CAH",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/721371/000072137123000060/cah-20230630.htm",
+    "formType": "10-K",
+    "filedAt": "2023-08-15T08:50:31-04:00"
+  }
+,
+  {
+    "companyName": "CHEVRON CORP",
+    "ticker": "CVX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/93410/000009341023000009/cvx-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T11:51:02-05:00"
+  }
+,
+  {
+    "companyName": "HOME DEPOT, INC.",
+    "ticker": "HD",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/354950/000035495023000059/hd-20230129.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-15T16:22:15-04:00"
+  }
+,
+  {
+    "companyName": "Walgreens Boots Alliance, Inc.",
+    "ticker": "WBA",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1618921/000161892123000062/wba-20230831.htm",
+    "formType": "10-K",
+    "filedAt": "2023-10-12T16:01:16-04:00"
+  }
+,
+  {
+    "companyName": "Marathon Petroleum Corp",
+    "ticker": "MPC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1510295/000151029523000012/mpc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T13:32:52-05:00"
+  }
+,
+  {
+    "companyName": "KROGER CO",
+    "ticker": "KR",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/56873/000155837023004767/kr-20230128x10k.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-28T08:09:40-04:00"
+  }
+,
+  {
+    "companyName": "FORD MOTOR CO",
+    "ticker": "F",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/37996/000003799623000012/f-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-02T19:39:34-05:00"
+  }
+,
+  {
+    "companyName": "VERIZON COMMUNICATIONS INC",
+    "ticker": "VZ",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/732712/000073271223000012/vz-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-10T11:54:36-05:00"
+  }
+,
+  {
+    "companyName": "JPMORGAN CHASE & CO",
+    "ticker": "JPM",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/19617/000001961723000231/jpm-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-21T16:13:55-05:00"
+  }
+,
+  {
+    "companyName": "General Motors Co",
+    "ticker": "GM",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1467858/000146785823000029/gm-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-31T15:50:27-05:00"
+  }
+,
+  {
+    "companyName": "CENTENE CORP",
+    "ticker": "CNC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1071739/000107173923000047/cnc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-21T16:29:25-05:00"
+  }
+,
+  {
+    "companyName": "Phillips 66",
+    "ticker": "PSX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1534701/000153470123000053/psx-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-22T17:00:31-05:00"
+  }
+,
+  {
+    "companyName": "VALERO ENERGY CORP/TX",
+    "ticker": "VLO",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1035002/000103500223000027/vlo-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T14:28:38-05:00"
+  }
+,
+  {
+    "companyName": "Dell Technologies Inc.",
+    "ticker": "DELL",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1571996/000157199623000007/dell-20230203.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-30T16:19:36-04:00"
+  }
+,
+  {
+    "companyName": "TARGET CORP",
+    "ticker": "TGT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/27419/000002741923000015/tgt-20230128.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-08T16:04:18-05:00"
+  }
+,
+  {
+    "companyName": "FEDERAL NATIONAL MORTGAGE ASSOCIATION FANNIE MAE",
+    "ticker": "FNMA",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/310522/000031052223000184/fnm-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-14T07:24:41-05:00"
+  }
+,
+  {
+    "companyName": "UNITED PARCEL SERVICE INC",
+    "ticker": "UPS",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1090727/000109072723000006/ups-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-21T06:16:30-05:00"
+  }
+,
+  {
+    "companyName": "LOWES COMPANIES INC",
+    "ticker": "LOW",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/60667/000006066723000034/low-20230203.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-27T16:46:36-04:00"
+  }
+,
+  {
+    "companyName": "BANK OF AMERICA CORP /DE/",
+    "ticker": "BAC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/70858/000007085823000092/bac-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-22T16:33:50-05:00"
+  }
+,
+  {
+    "companyName": "JOHNSON & JOHNSON",
+    "ticker": "JNJ",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/200406/000020040623000016/jnj-20230101.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-16T16:01:53-05:00"
+  }
+,
+  {
+    "companyName": "Archer-Daniels-Midland Co",
+    "ticker": "ADM",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/7084/000000708423000010/adm-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-14T16:09:23-05:00"
+  }
+,
+  {
+    "companyName": "FEDEX CORP",
+    "ticker": "FDX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1048911/000095017023033201/fdx-20230531.htm",
+    "formType": "10-K",
+    "filedAt": "2023-07-17T16:16:59-04:00"
+  }
+,
+  {
+    "companyName": "HUMANA INC",
+    "ticker": "HUM",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/49071/000004907123000011/hum-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-16T15:11:58-05:00"
+  }
+,
+  {
+    "companyName": "WELLS FARGO & COMPANY/MN",
+    "ticker": "WFC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/72971/000007297123000071/wfc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-21T17:13:29-05:00"
+  }
+,
+  {
+    "companyName": "PFIZER INC",
+    "ticker": "PFE",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/78003/000007800323000024/pfe-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T14:12:53-05:00"
+  }
+,
+  {
+    "companyName": "CITIGROUP INC",
+    "ticker": "C",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/831001/000083100123000037/c-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-24T21:45:33-05:00"
+  }
+,
+  {
+    "companyName": "PEPSICO INC",
+    "ticker": "PEP",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/77476/000007747623000007/pep-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-08T18:06:37-05:00"
+  }
+,
+  {
+    "companyName": "INTEL CORP",
+    "ticker": "INTC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/50863/000005086323000006/intc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-26T18:31:20-05:00"
+  }
+,
+  {
+    "companyName": "PROCTER & GAMBLE Co",
+    "ticker": "PG",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/80424/000008042423000073/pg-20230630.htm",
+    "formType": "10-K",
+    "filedAt": "2023-08-04T16:16:13-04:00"
+  }
+,
+  {
+    "companyName": "GENERAL ELECTRIC CO",
+    "ticker": "GE",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/40545/000004054523000023/ge-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-10T08:32:52-05:00"
+  }
+,
+  {
+    "companyName": "INTERNATIONAL BUSINESS MACHINES CORP",
+    "ticker": "IBM",
+    "linkToFilingDetails": "https://www.sec.gov/ix?doc=/Archives/edgar/data/51143/000155837023002376/ibm-20221231x10k.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-28T16:26:11-05:00"
+  }
+,
+  {
+    "companyName": "METLIFE INC",
+    "ticker": "MET",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1099219/000109921923000045/met-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T17:11:40-05:00"
+  }
+,
+  {
+    "companyName": "Albertsons Companies, Inc.",
+    "ticker": "ACI",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1646972/000164697223000045/aci-20230225.htm",
+    "formType": "10-K",
+    "filedAt": "2023-04-25T16:10:00-04:00"
+  }
+,
+  {
+    "companyName": "Walt Disney Co",
+    "ticker": "DIS",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1744489/000174448923000216/dis-20230930.htm",
+    "formType": "10-K",
+    "filedAt": "2023-11-21T17:04:04-05:00"
+  }
+,
+  {
+    "companyName": "Energy Transfer LP",
+    "ticker": "ET",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1276187/000127618723000014/et-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-17T12:22:40-05:00"
+  }
+,
+  {
+    "companyName": "LOCKHEED MARTIN CORP",
+    "ticker": "LMT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/936468/000093646823000009/lmt-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-26T16:29:45-05:00"
+  }
+,
+  {
+    "companyName": "FEDERAL HOME LOAN MORTGAGE CORP",
+    "ticker": "FMCC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1026214/000102621423000037/fmcc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-22T07:58:44-05:00"
+  }
+,
+  {
+    "companyName": "GOLDMAN SACHS GROUP INC",
+    "ticker": "GS",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/886982/000088698223000003/gs-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T19:58:16-05:00"
+  }
+,
+  {
+    "companyName": "RAYTHEON TECHNOLOGIES CORP",
+    "ticker": "RTX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/101829/000010182923000009/rtx-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-06T17:32:52-05:00"
+  }
+,
+  {
+    "companyName": "HP INC",
+    "ticker": "HPQ",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/47217/000004721723000100/hpq-20231031.htm",
+    "formType": "10-K",
+    "filedAt": "2023-12-15T21:31:21-05:00"
+  }
+,
+  {
+    "companyName": "BOEING CO",
+    "ticker": "BA",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/12927/000001292723000007/ba-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-27T14:26:33-05:00"
+  }
+,
+  {
+    "companyName": "MORGAN STANLEY",
+    "ticker": "MS",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/895421/000089542123000284/ms-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-24T16:05:43-05:00"
+  }
+,
+  {
+    "companyName": "HCA Healthcare, Inc.",
+    "ticker": "HCA",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/860730/000095017023003234/hca-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-17T17:12:43-05:00"
+  }
+,
+  {
+    "companyName": "AbbVie Inc.",
+    "ticker": "ABBV",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1551152/000155115223000011/abbv-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-17T12:54:29-05:00"
+  }
+,
+  {
+    "companyName": "DOW INC.",
+    "ticker": "DOW",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/29915/000175178823000014/dow-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-01T07:25:18-05:00"
+  },
+  {
+    "companyName": "DOW CHEMICAL CO /DE/",
+    "ticker": "DOW",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/29915/000175178823000014/dow-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-01T07:25:18-05:00"
+  }
+,
+  {
+    "companyName": "Tesla, Inc.",
+    "ticker": "TSLA",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1318605/000095017023001409/tsla-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-30T21:29:15-05:00"
+  }
+,
+  {
+    "companyName": "ALLSTATE CORP",
+    "ticker": "ALL",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/899051/000089905123000020/all-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-16T17:32:22-05:00"
+  }
+,
+  {
+    "companyName": "AMERICAN INTERNATIONAL GROUP, INC.",
+    "ticker": "AIG",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/5272/000000527223000007/aig-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-17T13:24:05-05:00"
+  }
+,
+  {
+    "companyName": "BEST BUY CO INC",
+    "ticker": "BBY",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/764478/000076447823000006/bby-20230128x10k.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-17T17:14:03-04:00"
+  }
+,
+  {
+    "companyName": "CHARTER COMMUNICATIONS, INC. /MO/",
+    "ticker": "CHTR",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1091667/000109166723000024/chtr-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-01-27T07:04:46-05:00"
+  }
+,
+  {
+    "companyName": "SYSCO CORP",
+    "ticker": "SYY",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/96021/000009602123000117/syy-20230701.htm",
+    "formType": "10-K",
+    "filedAt": "2023-08-24T20:10:07-04:00"
+  }
+,
+  {
+    "companyName": "Merck & Co., Inc.",
+    "ticker": "MRK",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/310158/000162828023005061/mrk-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-24T16:22:30-05:00"
+  }
+,
+  {
+    "companyName": "CATERPILLAR INC",
+    "ticker": "CAT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/18230/000001823023000011/cat-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-15T10:27:56-05:00"
+  }
+,
+  {
+    "companyName": "CISCO SYSTEMS, INC.",
+    "ticker": "CSCO",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/858877/000085887723000023/csco-20230729.htm",
+    "formType": "10-K",
+    "filedAt": "2023-09-07T16:30:09-04:00"
+  }
+,
+  {
+    "companyName": "TJX COMPANIES INC /DE/",
+    "ticker": "TJX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/109198/000010919823000004/tjx-20230128.htm",
+    "formType": "10-K",
+    "filedAt": "2023-03-29T11:38:54-04:00"
+  }
+,
+  {
+    "companyName": "CONOCOPHILLIPS",
+    "ticker": "COP",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1163165/000116316523000006/cop-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-16T12:42:43-05:00"
+  }
+,
+  {
+    "companyName": "PROGRESSIVE CORP/OH/",
+    "ticker": "PGR",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/80661/000008066123000006/pgr-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-27T10:13:46-05:00"
+  }
+,
+  {
+    "companyName": "TYSON FOODS, INC.",
+    "ticker": "TSN",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/100493/000010049323000105/tsn-20230930.htm",
+    "formType": "10-K",
+    "filedAt": "2023-11-13T07:34:37-05:00"
+  }
+,
+  {
+    "companyName": "BRISTOL MYERS SQUIBB CO",
+    "ticker": "BMY",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/14272/000001427223000046/bmy-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-14T16:24:27-05:00"
+  }
+,
+  {
+    "companyName": "NIKE, Inc.",
+    "ticker": "NKE",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/320187/000032018723000039/nke-20230531.htm",
+    "formType": "10-K",
+    "filedAt": "2023-07-20T16:20:36-04:00"
+  }
+,
+  {
+    "companyName": "DEERE & CO",
+    "ticker": "DE",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/315189/000155837023019812/de-20231029x10k.htm",
+    "formType": "10-K",
+    "filedAt": "2023-12-15T10:27:39-05:00"
+  }
+,
+  {
+    "companyName": "AMERICAN EXPRESS CO",
+    "ticker": "AXP",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/4962/000000496223000006/axp-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-10T15:21:14-05:00"
+  }
+,
+  {
+    "companyName": "ABBOTT LABORATORIES",
+    "ticker": "ABT",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1800/000162828023004026/abt-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-17T16:09:44-05:00"
+  }
+,
+  {
+    "companyName": "StoneX Group Inc.",
+    "ticker": "SNEX",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/913760/000091376023000159/intl-20230930.htm",
+    "formType": "10-K",
+    "filedAt": "2023-11-24T12:55:33-05:00"
+  }
+,
+  {
+    "companyName": "PLAINS GP HOLDINGS LP",
+    "ticker": "PAGP",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1581990/000158199023000005/pagp-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-28T21:40:14-05:00"
+  }
+,
+  {
+    "companyName": "ENTERPRISE PRODUCTS PARTNERS L.P.",
+    "ticker": "EPD",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1061219/000106121923000006/form10k.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-28T10:29:20-05:00"
+  }
+,
+  {
+    "companyName": "ORACLE CORP",
+    "ticker": "ORCL",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/1341439/000095017023028914/orcl-20230531.htm",
+    "formType": "10-K",
+    "filedAt": "2023-06-20T16:06:29-04:00"
+  }
+,
+  {
+    "companyName": "THERMO FISHER SCIENTIFIC INC.",
+    "ticker": "TMO",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/97745/000009774523000008/tmo-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-23T12:54:52-05:00"
+  }
+,
+  {
+    "companyName": "COCA COLA CO",
+    "ticker": "KO",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/21344/000002134423000011/ko-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-21T16:03:20-05:00"
+  }
+,
+  {
+    "companyName": "GENERAL DYNAMICS CORP",
+    "ticker": "GD",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/40533/000004053323000014/gd-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-07T09:28:44-05:00"
+  }
+,
+  {
+    "companyName": "NUCOR CORP",
+    "ticker": "NUE",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/73309/000156459023002793/nue-10k_20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-28T19:41:43-05:00"
+  }
+,
+  {
+    "companyName": "EXELON CORP",
+    "ticker": "EXC",
+    "linkToFilingDetails": "https://www.sec.gov/Archives/edgar/data/8192/000110935723000018/exc-20221231.htm",
+    "formType": "10-K",
+    "filedAt": "2023-02-14T17:09:56-05:00"
+  }
+]
