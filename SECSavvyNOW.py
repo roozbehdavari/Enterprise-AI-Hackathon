@@ -65,7 +65,7 @@ def prefill_prompts(action, choice, company):
         'Compare': 'Compare these companies',
     }
         
-    # grammer fix 
+    # grammar fix 
     if action == 'Compare':
         prefill = f'{prompts[action]} with {company}: {str(choice)}'
     else:
@@ -168,12 +168,12 @@ with st.sidebar:
         st.write('SECSavvyNow by ServiceNow')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
-    feature = pills('Choose a feature.', ['Summarize', 'Questions', 'Compare'], index=0)
-    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
-    
+    feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
     if feature == 'Compare':
         choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
 
+    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
+    
 if clear_chat:
     st.session_state.messages = []
 
@@ -190,7 +190,7 @@ if feature == 'Summarize':
             buttons.append(button)
     choice = None if True not in buttons else extra.summary_sections[buttons.index(True)]
 elif feature == 'Questions':
-    st.markdown("<h3 style='text-align: center; color: gray;'>Choose the question you want to explore.</h3>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center; color: gray;'>Choose the question you want to explore.</h5>", unsafe_allow_html=True)
     if persona == 'Sales Representative':
         # choice = st.radio(label='Question Options', options=extra.sales_questions, label_visibility='collapsed', index=None)
         buttons = []
