@@ -170,7 +170,7 @@ def generate_rag_prompt_template(
         f"Context: Analyzing 10-K and 10-Q reports of companies: {', '.join(company_names)}.\n"
         "source_documents: \n"
         "{source_documents}"
-        f"{persona_requests.get(user_persona, 'Please generate a detailed analysis based on the information extracted from the reports.')}"
+        f"{persona_requests.get(user_persona, ' Please generate a detailed analysis based on the information extracted from the reports.')}"
     )
 
     # Creating Prompt object
@@ -216,7 +216,7 @@ def is_document_relevant(document: Document,
 def is_document_relevant_extractive_summary(document: Document, 
                                             user_query: str, 
                                             cohere_model: ChatCohere = cohere_chat_model_light
-                                        ) -> bool:
+                                           ) -> bool:
     """
     Check the relevancy of a document to the user query using the specified Cohere model.
 
@@ -234,9 +234,9 @@ def is_document_relevant_extractive_summary(document: Document,
     document_content = document.page_content
 
     # Generate the prompt using the document content and user query
-    prompt = f"""Does the Document_Content partially answer the User_Query? \n 
-                 If Yes, Provide only the extractive summary of the relevant part of the document. Do not add any additional explanation. \n
-                 If No, return the word 'IRRELEVANT' and nothing else. \n\n
+    prompt = f"""If Document_Content partially answer the User_Query create the extractive summary of the relevant part of the document. \n
+                 Do not add any additional explanation. \n
+                 Otherwise, return return "irrelevant" \n\n
                  User_Query: '{user_query}' \n 
                  Document_Content: {document_content}."""
 
@@ -252,7 +252,7 @@ def is_document_relevant_extractive_summary(document: Document,
 
 
 def rag(user_query: str, 
-        chat_history: str, 
+        chat_history: str = None, 
         user_persona: str = 'Individual Investor', 
         company_names: List[str] = ['UNITEDHEALTH GROUP INC']
         ) -> Tuple[str, List[str]]:
@@ -277,20 +277,21 @@ def rag(user_query: str,
 
     # Retrieve top relevant documents
     input_docs = retrieve_top_documents(user_query, company_names=company_names)
-
+    
     # Filter relevant documents using the light model
-    relevant_docs = [doc for doc in input_docs if is_document_relevant(doc, user_query)]
-
+    relevant_docs = []
+    for doc in input_docs:
+        doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
+        if doc_relevancy_summary:
+            relevant_docs.append(doc_relevancy_summary)
+    
     # Generate the RAG prompt template
     rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
     
-    # Create the Cohere RAG retriever using the chat model 
-    rag_retriever = CohereRagRetriever(llm=cohere_chat_model, rag_prompt=rag_prompt)
-    docs = rag_retriever.get_relevant_documents(combined_history, source_documents=relevant_docs)
+    # Generate the Response
+    chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
+    answer = chain.invoke({"context": relevant_docs})
+    sources = list(set([x.metadata['source'] for x in relevant_docs]))
+    search_type = "Grounded"
     
-    # Extract answer and citations
-    answer = docs[-1].page_content
-    citations = docs[-1].metadata.get('citations', [])
-    
-    return answer, citations
-
+    return answer, sources, search_type
