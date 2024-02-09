@@ -173,8 +173,6 @@ with st.sidebar:
     
     if feature == 'Compare':
         choice = st.multiselect(label='Choose two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
-        if choice:
-            choice.insert(0, company)
 
 if clear_chat:
     st.session_state.messages = []
