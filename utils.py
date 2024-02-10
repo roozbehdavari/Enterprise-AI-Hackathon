@@ -121,47 +121,47 @@ def generate_comparison_new_queries(user_query: str) -> List[str]:
     return new_queries
 
 
-# def generate_comparison_template_queries(company_names: List[str], metrics: List[str] = None) -> List[Dict[str, str]]:
-#     """
-#     Generates template queries for extracting specified metrics for a list of companies,
-#     returning a list of dictionaries with company names and their corresponding queries.
+def generate_comparison_template_queries(company_names: List[str], metrics: List[str] = None) -> List[Dict[str, str]]:
+    """
+    Generates template queries for extracting specified metrics for a list of companies,
+    returning a list of dictionaries with company names and their corresponding queries.
     
-#     Args:
-#         company_names (List[str]): A list of company names.
-#         metrics (List[str]): Optional. A list of metrics to include in the query. Defaults to a predefined list.
+    Args:
+        company_names (List[str]): A list of company names.
+        metrics (List[str]): Optional. A list of metrics to include in the query. Defaults to a predefined list.
     
-#     Returns:
-#         List[Dict[str, str]]: A list of dictionaries, each containing a 'company_name' key with the company name
-#                               and a 'query' key with the formatted query for that company.
-#     """
-#     # Default metrics if none are provided
-#     if metrics is None:
-#         metrics = [
-#             "Revenue", 
-#             "Net Income", 
-#             "Earnings Per Share (EPS)",
-#             "Total Assets",
-#             "Liabilities",
-#             "Equity",
-#             "Operating Cash Flow",
-#             "Capital Expenditures",
-#             "R&D Expenses",
-#             "Debt to Equity Ratio",
-#             "Market Cap"
-#         ]
+    Returns:
+        List[Dict[str, str]]: A list of dictionaries, each containing a 'company_name' key with the company name
+                              and a 'query' key with the formatted query for that company.
+    """
+    # Default metrics if none are provided
+    if metrics is None:
+        metrics = [
+            "Revenue", 
+            "Net Income", 
+            "Earnings Per Share (EPS)",
+            "Total Assets",
+            "Liabilities",
+            "Equity",
+            "Operating Cash Flow",
+            "Capital Expenditures",
+            "R&D Expenses",
+            "Debt to Equity Ratio",
+            "Market Cap"
+        ]
 
-#     # Creating the query string for metrics
-#     metrics_string = '", "'.join(metrics)
+    # Creating the query string for metrics
+    metrics_string = '", "'.join(metrics)
 
-#     # Generating queries with list comprehension
-#     queries = [
-#         {
-#             "company_name": company,
-#             "query": f"Extract the following metrics for {company}: \"{metrics_string}\"."
-#         } for company in company_names
-#     ]
+    # Generating queries with list comprehension
+    queries = [
+        {
+            "company_name": company,
+            "query": f"Extract the following metrics for {company}: \"{metrics_string}\"."
+        } for company in company_names
+    ]
 
-#     return queries
+    return queries
 
 
 def match_company_to_generated_query(company_names: List[str], queries: List[str]) -> List[Dict[str, str]]:
