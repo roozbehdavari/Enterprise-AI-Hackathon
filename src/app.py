@@ -22,35 +22,6 @@ import random
 import warnings
 warnings.filterwarnings("ignore")
 
-# Instantiate Cohere
-api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
-client_cohere = cohere.Client(api_key_cohere)
-# Create Cohere's chat model and embeddings objects
-cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere, 
-                               model="command-nightly", 
-                               temperature=0, 
-                               echo=True)
-cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
-                                     model="command-light", 
-                                     temperature=0, 
-                                     echo=True)
-cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
-                                     model="embed-english-v3.0")
-
-
-# Instantiate Weaviate
-api_key_weaviate = "XdEHRl1epRJQGFMdTCbgLybatoNC25iSw8mA"
-auth_config = weaviate.AuthApiKey(api_key=api_key_weaviate)
-
-client_weaviate = weaviate.Client(
-  url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
-  auth_client_secret=auth_config,  
-  timeout_config=(5, 15), 
-  additional_headers={  
-    "X-Cohere-Api-Key": api_key_cohere,   
-  }
-)
-
 def prefill_prompts(action, choice, company):
     
     if action == None:
