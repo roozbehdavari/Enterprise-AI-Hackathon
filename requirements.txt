@@ -10,3 +10,5 @@ streamlit_pills==0.3.0
 weaviate_client==4.4.2
 openai==1.12.0
 sec_api==1.0.17
+spacy==3.7.2
+nltk==3.8.1
