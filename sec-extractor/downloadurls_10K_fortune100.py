@@ -21,7 +21,7 @@ base_query = {
     }]
 }
 # open the file we use to store the filing URLs
-log_file = open("filing_urls_10K_fortune100.json", "a")
+log_file = open("../data/filing_urls_10K_fortune100.json", "a")
 year = "2023"
 
 ticker_symbols = [

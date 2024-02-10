@@ -58,7 +58,7 @@ def generate_company_entry(company_name,
   }
 
 
-file_path = "filing_urls_10Q_fortune100.json"  # Replace with the actual path to your file
+file_path = "../data/filing_urls_10Q_fortune100.json"  # Replace with the actual path to your file
 
 # Read the JSON data from the file
 with open(file_path, 'r') as file:
@@ -82,7 +82,7 @@ for entry in json_data:
   # Print the result
   #print(json_data)
   # Specify the file path
-  file_path = "fortune100_10Q_2023/" + ticker + "_" + filed_at + "_" + form_type + ".json"
+  file_path = "../data/fortune100_10Q_2023/" + ticker + "_" + filed_at + "_" + form_type + ".json"
 
   # Write data to the JSON file
   with open(file_path, 'w') as json_file:
