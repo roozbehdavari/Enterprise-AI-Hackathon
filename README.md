@@ -10,17 +10,17 @@ SECSavvyNow aims to democratize access to complex financial information, making 
 
 ## Core Features:
 
-*Contextual Information Retrieval*: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
+**Contextual Information Retrieval**: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
 
-*Dynamic Query Generation*: Utilizes Cohere's powerful NLP models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
+**Dynamic Query Generation**: Utilizes Cohere's powerful NLP models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
 
-Advanced Document Summarization: Employs CohereRerank and custom summarization techniques to distill lengthy financial documents into concise summaries, highlighting critical data points such as revenue, net income, EPS, and market cap among others.
+**Advanced Document Summarization**: Employs CohereRerank and custom summarization techniques to distill lengthy financial documents into concise summaries, highlighting critical data points such as revenue, net income, EPS, and market cap among others.
 
-Financial Comparisons: Features a specialized query generation system that constructs comparative analyses of selected companies based on a wide array of financial metrics. This allows users to easily compare performance, strategy, and market positioning across different entities.
+**Financial Comparisons**: Features a specialized query generation system that constructs comparative analyses of selected companies based on a wide array of financial metrics. This allows users to easily compare performance, strategy, and market positioning across different entities.
 
-Interactive Chat Interface: Powered by ChatCohere, the platform offers an interactive, conversational interface that guides users through their information discovery journey, providing personalized insights and responses.
+**Interactive Chat Interface**: Powered by ChatCohere, the platform offers an interactive, conversational interface that guides users through their information discovery journey, providing personalized insights and responses.
 
-Relevancy Checks and Extractive Summaries: Incorporates a rigorous document relevancy evaluation framework, ensuring that only the most relevant documents are presented to the user. For documents deemed relevant, the platform can generate extractive summaries, focusing on the parts of the documents that directly answer the user's queries.
+**Relevancy Checks and Extractive Summaries**: Incorporates a rigorous document relevancy evaluation framework, ensuring that only the most relevant documents are presented to the user. For documents deemed relevant, the platform can generate extractive summaries, focusing on the parts of the documents that directly answer the user's queries.
 
 ## Technology Stack:
 
