@@ -242,7 +242,6 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
         #with st.spinner(f'Did you know? {random.choice(extra.fun_facts)}'):
         with st.spinner(f'Generating the Answer: ...'):
             if feature == 'Compare':
-                st.markdown(f"company: {company} choice: {choice}")
                 company_list = choice + [company]
             else:
                 company_list = [company]
