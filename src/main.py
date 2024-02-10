@@ -26,11 +26,11 @@ client_cohere = cohere.Client(api_key_cohere)
 
 # Create Cohere's chat model and embeddings objects
 cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere, 
-                               model="command-nightly", 
+                               model="command", 
                                temperature=0, 
                                echo=True)
 cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
-                                     model="command-nightly-light", 
+                                     model="command-light", 
                                      temperature=0, 
                                      echo=True)
 cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
@@ -55,7 +55,7 @@ def retrieve_top_documents(
                             query: str,
                             company_names: List[str],
                             class_name: str = 'SECSavvyNOW',
-                            top_n: int = 20,
+                            top_n: int = 15,
                             max_distance: float = 999.0
                         ) -> List[Document]:
     """
