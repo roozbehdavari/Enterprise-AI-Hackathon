@@ -8,8 +8,8 @@ import weaviate
 import streamlit as st
 from streamlit_pills import pills
 
-from utils import retrieve_top_documents
-from utils import rag, rag_with_webSearch
+from src.main import retrieve_top_documents
+from src.main import rag, rag_with_webSearch
 import constants
 
 import requests
