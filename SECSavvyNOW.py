@@ -10,13 +10,13 @@ from streamlit_pills import pills
 
 from utils import retrieve_top_documents
 from utils import rag, rag_with_webSearch
+import extra
 
 import requests
 import json
 import os
 import numpy as np
 import pandas as pd
-import extra
 import random
 
 import warnings
