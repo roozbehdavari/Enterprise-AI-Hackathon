@@ -154,7 +154,6 @@ if clear_chat:
 if feature == 'Summarize':
     st.markdown("<h5 style='text-align: center; color: gray;'>Choose the section you want to summarize.</h5>", unsafe_allow_html=True)
 
-    # choice = pills(label='Summarize Options', options=extra.summary_sections, label_visibility='collapsed', index=None)
     buttons = []
     columns = st.columns(2)
     for index, i in enumerate(extra.summary_sections):
@@ -166,7 +165,6 @@ if feature == 'Summarize':
 elif feature == 'Questions':
     st.markdown("<h5 style='text-align: center; color: gray;'>Choose the question you want to explore.</h5>", unsafe_allow_html=True)
     if persona == 'Sales Representative':
-        # choice = st.radio(label='Question Options', options=extra.sales_questions, label_visibility='collapsed', index=None)
         buttons = []
         columns = st.columns(2)
         for index, i in enumerate(extra.sales_questions):
@@ -176,7 +174,6 @@ elif feature == 'Questions':
                 buttons.append(button)
         choice = None if True not in buttons else extra.sales_questions[buttons.index(True)]
     elif persona == 'Investor':
-        # choice = st.radio(label='Question Options', options=extra.investor_questions, label_visibility='collapsed', index=None)
         buttons = []
         columns = st.columns(2)
         for index, i in enumerate(extra.investor_questions):
@@ -186,7 +183,6 @@ elif feature == 'Questions':
                 buttons.append(button)
         choice = None if True not in buttons else extra.investor_questions[buttons.index(True)]
     else:
-        # choice = st.radio(label='Question Options', options=extra.fin_questions, label_visibility='collapsed', index=None)
         buttons = []
         columns = st.columns(2)
         for index, i in enumerate(extra.fin_questions):
@@ -212,7 +208,6 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
 
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
-        #with st.spinner(f'Did you know? {random.choice(extra.fun_facts)}'):
         with st.spinner(f'Generating the Answer: ...'):
             if feature == 'Compare':
                 company_list = choice + [company]
@@ -222,6 +217,4 @@ if prompt_msg := st.chat_input("Ask a follow-up question..."):
                                                                 user_persona=persona, 
                                                                 company_names=company_list)
         st.session_state.messages.append({"role": "assistant", "content": answer})
-        #message_placeholder.markdown(answer)
         message_placeholder.markdown(f"Answer: {answer}\n\r Citation:\n\r{search_type}: {citations}")
-        # st.write(df)st.table(df)
