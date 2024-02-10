@@ -10,7 +10,7 @@ from streamlit_pills import pills
 
 from utils import retrieve_top_documents
 from utils import rag, rag_with_webSearch
-import extra
+import constants
 
 import requests
 import json
@@ -141,11 +141,11 @@ with st.sidebar:
     with columns[1]:
         st.write('SECSavvyNow by ServiceNow')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
-    company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
+    company = st.selectbox('Choose a company to analyze.', constants.companies, index=constants.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
     
     if feature == 'Compare':
-        choice = st.multiselect(label='Select up to two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
+        choice = st.multiselect(label='Select up to two companies to compare the above company to.', options=[item for item in constants.companies if item != company], max_selections=2)
 
     clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')    
 if clear_chat:
@@ -156,41 +156,41 @@ if feature == 'Summarize':
 
     buttons = []
     columns = st.columns(2)
-    for index, i in enumerate(extra.summary_sections):
-        col_num = 0  if index < len(extra.summary_sections)//2 else 1
+    for index, i in enumerate(constants.summary_sections):
+        col_num = 0  if index < len(constants.summary_sections)//2 else 1
         with columns[col_num]:
             button = st.button(i, use_container_width=True, type='primary')
             buttons.append(button)
-    choice = None if True not in buttons else extra.summary_sections[buttons.index(True)]
+    choice = None if True not in buttons else constants.summary_sections[buttons.index(True)]
 elif feature == 'Questions':
     st.markdown("<h5 style='text-align: center; color: gray;'>Choose the question you want to explore.</h5>", unsafe_allow_html=True)
     if persona == 'Sales Representative':
         buttons = []
         columns = st.columns(2)
-        for index, i in enumerate(extra.sales_questions):
-            col_num = 0  if index < len(extra.sales_questions)//2 else 1
+        for index, i in enumerate(constants.sales_questions):
+            col_num = 0  if index < len(constants.sales_questions)//2 else 1
             with columns[col_num]:
                 button = st.button(i, use_container_width=True, type='primary')
                 buttons.append(button)
-        choice = None if True not in buttons else extra.sales_questions[buttons.index(True)]
+        choice = None if True not in buttons else constants.sales_questions[buttons.index(True)]
     elif persona == 'Investor':
         buttons = []
         columns = st.columns(2)
-        for index, i in enumerate(extra.investor_questions):
-            col_num = 0  if index < len(extra.investor_questions)//2 else 1
+        for index, i in enumerate(constants.investor_questions):
+            col_num = 0  if index < len(constants.investor_questions)//2 else 1
             with columns[col_num]:
                 button = st.button(i, use_container_width=True, type='primary')
                 buttons.append(button)
-        choice = None if True not in buttons else extra.investor_questions[buttons.index(True)]
+        choice = None if True not in buttons else constants.investor_questions[buttons.index(True)]
     else:
         buttons = []
         columns = st.columns(2)
-        for index, i in enumerate(extra.fin_questions):
-            col_num = 0  if index < len(extra.fin_questions)//2 else 1
+        for index, i in enumerate(constants.fin_questions):
+            col_num = 0  if index < len(constants.fin_questions)//2 else 1
             with columns[col_num]:
                 button = st.button(i, use_container_width=True, type='primary')
                 buttons.append(button)
-        choice = None if True not in buttons else extra.fin_questions[buttons.index(True)]
+        choice = None if True not in buttons else constants.fin_questions[buttons.index(True)]
 
 # Load history
 for message in st.session_state.messages:
