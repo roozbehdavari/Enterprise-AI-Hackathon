@@ -9,7 +9,7 @@ from datetime import datetime
 import cohere
 import json
 import os
-import path
+import pathlib
 import requests
 import sys
 from typing import List, Dict, Any
@@ -20,7 +20,6 @@ from weaviate.exceptions import SchemaValidationException
 utils = os.path.join(pathlib.Path(__file__).parent.parent.resolve(),"utils")
 sys.path.insert(1, utils)
 
-from file_utils import *
 from ssl_utils import *
 
 # global setup
@@ -93,7 +92,7 @@ def create_WEAVIATE_class(client: 'weaviate.client.Client',
 	"""
 	try:
 		client.schema.delete_class(class_name)
-	except (RequestError, SchemaValidationException) as e:
+	except (SchemaValidationException) as e:
 		print(f"Error deleting class '{class_name}': {e}")
 		return False
 	
