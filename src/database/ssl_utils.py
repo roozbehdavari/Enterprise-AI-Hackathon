@@ -5,6 +5,9 @@ import contextlib
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 
+import json
+from os.path import join, split
+
 old_merge_environment_settings = requests.Session.merge_environment_settings
 
 @contextlib.contextmanager
@@ -37,5 +40,19 @@ def no_ssl_verification():
             except:
                 pass
 
+def export(path, outfile, filing):
+	full_filename = join(path, outfile)
+	with open(full_filename, "w") as f:
+		json.dump(filing, f, indent=4)
 
+
+def get_path(full_filename):
+	head_tail = split(full_filename)
+	return head_tail[0]
+
+def read_filelist(filename):
+	with open(filename) as f:
+		files = [line.rstrip() for line in f]
+
+	return files
             
