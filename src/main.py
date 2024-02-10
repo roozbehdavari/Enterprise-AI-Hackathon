@@ -26,11 +26,11 @@ client_cohere = cohere.Client(api_key_cohere)
 
 # Create Cohere's chat model and embeddings objects
 cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere, 
-                               model="command", 
+                               model="command-nightly", 
                                temperature=0, 
                                echo=True)
 cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
-                                     model="command-light", 
+                                     model="command-nightly-light", 
                                      temperature=0, 
                                      echo=True)
 cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
