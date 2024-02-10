@@ -93,33 +93,6 @@ st.set_page_config(layout="wide")
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# custom_css = """
-#     <style>
-#         section.stSidebar .stButton button {
-#                 background-color: #298319;
-#                 border-color: #DBE1E7;
-#                 color: #368B28;
-#                 height: 48px;
-#         }
-#         .stButton button:first-child {
-#             background-color: #F9F9FD;
-#             border-color: #DBE1E7;
-#             color: #368B28;
-#             height: 48px;
-#         }
-#         .stButton button:hover {
-#             background-color: #F5F4F2;
-#             border-color: #DBE1E7;
-#             color: #368B28;
-#         }
-#         head, body, h1, h2, h3, h4, h5, h6, p, span, div {
-#             font-family: 'Lato', sans-serif;
-#         }
-#         p {
-#             font-size: 18px;
-#         }
-#     </style>
-# """
 #368B28 theme primary color
 custom_css = """
     <style>
