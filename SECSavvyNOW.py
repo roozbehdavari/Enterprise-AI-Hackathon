@@ -137,7 +137,7 @@ st.markdown("<h2 style='text-align: center; color: black;'>SECSavvyNow</h2>", un
 with st.sidebar:
     columns = st.columns([0.1, 0.9])
     with columns[0]:
-        st.image('sparkle_purple.svg')
+        st.image('img/sparkle_purple.svg')
     with columns[1]:
         st.write('SECSavvyNow by ServiceNow')
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
