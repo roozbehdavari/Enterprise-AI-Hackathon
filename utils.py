@@ -121,47 +121,47 @@ def generate_comparison_new_queries(user_query: str) -> List[str]:
     return new_queries
 
 
-def generate_comparison_template_queries(company_names: List[str], metrics: List[str] = None) -> List[Dict[str, str]]:
-    """
-    Generates template queries for extracting specified metrics for a list of companies,
-    returning a list of dictionaries with company names and their corresponding queries.
+# def generate_comparison_template_queries(company_names: List[str], metrics: List[str] = None) -> List[Dict[str, str]]:
+#     """
+#     Generates template queries for extracting specified metrics for a list of companies,
+#     returning a list of dictionaries with company names and their corresponding queries.
     
-    Args:
-        company_names (List[str]): A list of company names.
-        metrics (List[str]): Optional. A list of metrics to include in the query. Defaults to a predefined list.
+#     Args:
+#         company_names (List[str]): A list of company names.
+#         metrics (List[str]): Optional. A list of metrics to include in the query. Defaults to a predefined list.
     
-    Returns:
-        List[Dict[str, str]]: A list of dictionaries, each containing a 'company_name' key with the company name
-                              and a 'query' key with the formatted query for that company.
-    """
-    # Default metrics if none are provided
-    if metrics is None:
-        metrics = [
-            "Revenue", 
-            "Net Income", 
-            "Earnings Per Share (EPS)",
-            "Total Assets",
-            "Liabilities",
-            "Equity",
-            "Operating Cash Flow",
-            "Capital Expenditures",
-            "R&D Expenses",
-            "Debt to Equity Ratio",
-            "Market Cap"
-        ]
+#     Returns:
+#         List[Dict[str, str]]: A list of dictionaries, each containing a 'company_name' key with the company name
+#                               and a 'query' key with the formatted query for that company.
+#     """
+#     # Default metrics if none are provided
+#     if metrics is None:
+#         metrics = [
+#             "Revenue", 
+#             "Net Income", 
+#             "Earnings Per Share (EPS)",
+#             "Total Assets",
+#             "Liabilities",
+#             "Equity",
+#             "Operating Cash Flow",
+#             "Capital Expenditures",
+#             "R&D Expenses",
+#             "Debt to Equity Ratio",
+#             "Market Cap"
+#         ]
 
-    # Creating the query string for metrics
-    metrics_string = '", "'.join(metrics)
+#     # Creating the query string for metrics
+#     metrics_string = '", "'.join(metrics)
 
-    # Generating queries with list comprehension
-    queries = [
-        {
-            "company_name": company,
-            "query": f"Extract the following metrics for {company}: \"{metrics_string}\"."
-        } for company in company_names
-    ]
+#     # Generating queries with list comprehension
+#     queries = [
+#         {
+#             "company_name": company,
+#             "query": f"Extract the following metrics for {company}: \"{metrics_string}\"."
+#         } for company in company_names
+#     ]
 
-    return queries
+#     return queries
 
 
 def match_company_to_generated_query(company_names: List[str], queries: List[str]) -> List[Dict[str, str]]:
@@ -399,87 +399,6 @@ def rag(user_query: str,
     return answer, sources, search_type
 
 
-def rag_with_webSearch(user_query: str, 
-                       chat_history: str = None, 
-                       user_persona: str = 'Individual Investor', 
-                       company_names: List[str] = ['UNITEDHEALTH GROUP INC']
-                       ) -> Tuple[str, List[str]]:
-    """
-    Retrieve an answer and citations related to the given user query using Cohere's RAG model.
-    Web Search is used a fallback search mechanism. 
-
-    Args:
-        user_query (str): The user query for which the answer is sought.
-        chat_history (str): The chat history containing the conversation context.
-        user_persona (str, optional): The persona of the user (e.g., Individual Investor, Financial Analyst, Sales Representative). Defaults to 'Individual Investor'.
-        company_names (list of str, optional): List of company names being analyzed. Defaults to ['UNITEDHEALTH GROUP INC'].
-
-    Returns:
-        tuple: A tuple containing the answer text and a list of citations.
-    """
-
-    # If chat_history is not empty, refine the user query
-    if chat_history:
-        # Append the user query to the chat history
-        combined_history = f"{chat_history}\n{user_query}"
-        user_query = generate_user_query(combined_history)
-
-    # Retrieve top relevant documents
-    if len(company_names) > 1:
-        # Creating company specific query
-        user_queries = generate_comparison_template_queries(company_names)
-        input_docs = []
-        for pair in user_queries:
-            company_name = pair['company_name']
-            company_query = pair['query']
-            query_docs = retrieve_top_documents(company_query, company_names=[company_name], top_n=10)
-            input_docs += query_docs
-    else:
-        input_docs = retrieve_top_documents(user_query, company_names=company_names)
-    
-    # Check if input_docs is empty
-    if not input_docs:
-        # Fall back to web search with user_persona and company_names included in the query
-        search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
-        rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
-        docs = rag_retriever.get_relevant_documents(search_query)
-        # Extract answer and citations
-        answer = docs[-1].page_content
-        sources = 'Web Search'
-        search_type = 'Connector'
-    else:
-        # Filter relevant documents using the light model
-        relevant_docs = []
-        for doc in input_docs:
-            doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
-            if doc_relevancy_summary:
-                relevant_docs.append(doc_relevancy_summary)
-        # Check if relevant_docs is empty
-        if not relevant_docs:
-            # Fall back to web search with user_persona and company_names included in the query
-            search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
-            rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
-            docs = rag_retriever.get_relevant_documents(search_query)
-            # Extract answer and citations
-            answer = docs[-1].page_content
-            sources = 'Web Search'
-            search_type = 'Connector'
-        else:
-            # Generate the RAG prompt template
-            rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
-            # Generate the Response
-            chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
-            answer = chain.invoke({"context": relevant_docs})
-            sources = list(set([x.metadata['source'] for x in relevant_docs]))
-            search_type = "Grounded Search"
-    
-    # Check if docs is empty
-    if not answer:
-        return "No relevant information found. Please try again later.", [], ''
-
-    return answer, sources, search_type
-
-
 # def rag_with_webSearch(user_query: str, 
 #                        chat_history: str = None, 
 #                        user_persona: str = 'Individual Investor', 
@@ -508,11 +427,9 @@ def rag_with_webSearch(user_query: str,
 #     # Retrieve top relevant documents
 #     if len(company_names) > 1:
 #         # Creating company specific query
-#         user_queries = generate_comparison_new_queries(user_query)
-#         # Match the query and the company name
-#         matched_pairs = match_company_to_generated_query(queries=user_queries, company_names=company_names)
+#         user_queries = generate_comparison_template_queries(company_names)
 #         input_docs = []
-#         for pair in matched_pairs:
+#         for pair in user_queries:
 #             company_name = pair['company_name']
 #             company_query = pair['query']
 #             query_docs = retrieve_top_documents(company_query, company_names=[company_name], top_n=10)
@@ -561,4 +478,87 @@ def rag_with_webSearch(user_query: str,
 #         return "No relevant information found. Please try again later.", [], ''
 
 #     return answer, sources, search_type
+
+
+def rag_with_webSearch(user_query: str, 
+                       chat_history: str = None, 
+                       user_persona: str = 'Individual Investor', 
+                       company_names: List[str] = ['UNITEDHEALTH GROUP INC']
+                       ) -> Tuple[str, List[str]]:
+    """
+    Retrieve an answer and citations related to the given user query using Cohere's RAG model.
+    Web Search is used a fallback search mechanism. 
+
+    Args:
+        user_query (str): The user query for which the answer is sought.
+        chat_history (str): The chat history containing the conversation context.
+        user_persona (str, optional): The persona of the user (e.g., Individual Investor, Financial Analyst, Sales Representative). Defaults to 'Individual Investor'.
+        company_names (list of str, optional): List of company names being analyzed. Defaults to ['UNITEDHEALTH GROUP INC'].
+
+    Returns:
+        tuple: A tuple containing the answer text and a list of citations.
+    """
+
+    # If chat_history is not empty, refine the user query
+    if chat_history:
+        # Append the user query to the chat history
+        combined_history = f"{chat_history}\n{user_query}"
+        user_query = generate_user_query(combined_history)
+
+    # Retrieve top relevant documents
+    if len(company_names) > 1:
+        # Creating company specific query
+        user_queries = generate_comparison_new_queries(user_query)
+        # Match the query and the company name
+        matched_pairs = match_company_to_generated_query(queries=user_queries, company_names=company_names)
+        input_docs = []
+        for pair in matched_pairs:
+            company_name = pair['company_name']
+            company_query = pair['query']
+            query_docs = retrieve_top_documents(company_query, company_names=[company_name], top_n=10)
+            input_docs += query_docs
+    else:
+        input_docs = retrieve_top_documents(user_query, company_names=company_names)
+    
+    # Check if input_docs is empty
+    if not input_docs:
+        # Fall back to web search with user_persona and company_names included in the query
+        search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
+        rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
+        docs = rag_retriever.get_relevant_documents(search_query)
+        # Extract answer and citations
+        answer = docs[-1].page_content
+        sources = 'Web Search'
+        search_type = 'Connector'
+    else:
+        # Filter relevant documents using the light model
+        relevant_docs = []
+        for doc in input_docs:
+            doc_relevancy_summary = is_document_relevant_extractive_summary(doc, user_query)
+            if doc_relevancy_summary:
+                relevant_docs.append(doc_relevancy_summary)
+        # Check if relevant_docs is empty
+        if not relevant_docs:
+            # Fall back to web search with user_persona and company_names included in the query
+            search_query = f"{user_query} related to user persona of {user_persona} and companies {' '.join(company_names)}"
+            rag_retriever = CohereRagRetriever(llm=cohere_chat_model, connectors=[{"id": "web-search"}])
+            docs = rag_retriever.get_relevant_documents(search_query)
+            # Extract answer and citations
+            answer = docs[-1].page_content
+            sources = 'Web Search'
+            search_type = 'Connector'
+        else:
+            # Generate the RAG prompt template
+            rag_prompt = generate_rag_prompt_template(user_persona=user_persona, user_query=user_query, company_names=company_names)
+            # Generate the Response
+            chain = create_stuff_documents_chain(llm=cohere_chat_model_light, prompt=rag_prompt)
+            answer = chain.invoke({"context": relevant_docs})
+            sources = list(set([x.metadata['source'] for x in relevant_docs]))
+            search_type = "Grounded Search"
+    
+    # Check if docs is empty
+    if not answer:
+        return "No relevant information found. Please try again later.", [], ''
+
+    return answer, sources, search_type
     
