@@ -8,3 +8,5 @@ Requests==2.31.0
 streamlit==1.28.2
 streamlit_pills==0.3.0
 weaviate_client==4.4.2
+openai==1.12.0
+sec_api==1.0.17
