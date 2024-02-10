@@ -12,6 +12,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 import cohere
 import weaviate
+import streamlit as st
 
 import requests
 import json
@@ -20,7 +21,7 @@ from typing import List, Tuple, Optional, Dict
 
 
 # Cohere Instantiation
-api_key_cohere = "h5s3funzwf1JpxgZknyFoEap69EsEBdfRxT45W0r"
+api_key_cohere = st.secrets["api_key_cohere"]
 client_cohere = cohere.Client(api_key_cohere)
 
 # Create Cohere's chat model and embeddings objects
@@ -29,7 +30,7 @@ cohere_chat_model = ChatCohere(cohere_api_key=api_key_cohere,
                                temperature=0, 
                                echo=True)
 cohere_chat_model_light = ChatCohere(cohere_api_key=api_key_cohere, 
-                                     model="command-light", 
+                                     model="command-nightly-light", 
                                      temperature=0, 
                                      echo=True)
 cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere, 
@@ -37,11 +38,11 @@ cohere_embeddings = CohereEmbeddings(cohere_api_key=api_key_cohere,
 
 
 # Weaviate Instantiation
-api_key_weaviate = "XdEHRl1epRJQGFMdTCbgLybatoNC25iSw8mA"
+api_key_weaviate = st.secrets["api_key_weaviate"] 
 auth_config = weaviate.AuthApiKey(api_key=api_key_weaviate)
 
 client_weaviate = weaviate.Client(
-  url="https://now-cohere-hackathon-z2e1dbnn.weaviate.network", 
+  url=st.secrets["url_weaviate"], 
   auth_client_secret=auth_config,  
   timeout_config=(5, 15), 
   additional_headers={  
