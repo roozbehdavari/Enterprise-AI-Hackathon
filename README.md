@@ -4,7 +4,7 @@ Generative AI for Business Use Cases w. Cohere &amp; NYSE
 # SECSavvyNow - Advanced Financial Insights and Analysis Platform
 SECSavvyNow is an innovative platform designed to revolutionize the way analysts, investors, and business professionals access and analyze financial information. Utilizing state-of-the-art language models and retrieval technologies, SECSavvyNow offers a comprehensive suite of tools for extracting, comparing, and summarizing key financial metrics and insights from vast repositories of corporate filings and documents.
 
-Core Features:
+## Core Features:
 
 Contextual Information Retrieval: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
 
