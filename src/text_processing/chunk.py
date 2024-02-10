@@ -27,7 +27,7 @@ import warnings
 # import local tools
 utils = os.path.join(pathlib.Path(__file__).parent.parent.resolve(),"utils")
 sys.path.insert(1, utils)
-from file_utils import *
+from chunking_utils import *
 
 
 # global setup
@@ -42,7 +42,7 @@ exit()
 
 # GPT summarization
 def call_chatGpt(prompt, context):
-	endpoint = "https://openai-emerging.openai.azure.com"    
+	endpoint = "xxxxxxxx"    
 	
 	client = AzureOpenAI(
 		api_key = secrets["OPEN_API_KEY"],
@@ -51,7 +51,7 @@ def call_chatGpt(prompt, context):
 	)
 	
 	response = client.chat.completions.create(
-		model = "gpt-35-turbo",
+		model = "xxxxxxxx",
 		messages=[
 			{"role":"system", "content":"{}".format(prompt)},
 			{"role":"user", "content": "{}".format(context)}
