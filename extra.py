@@ -47,6 +47,20 @@ summary_sections = [
     "Principal Accountant Fees and Services​"
 ]
 
+compare_sections = [
+    "Revenue", 
+    "Net Income", 
+    "Earnings Per Share (EPS)",
+    "Total Assets",
+    "Liabilities",
+    "Equity",
+    "Operating Cash Flow",
+    "Capital Expenditures",
+    "R&D Expenses",
+    "Debt to Equity Ratio",
+    "Market Cap"
+]
+
 companies = [
     'ABBOTT LABORATORIES', 'ALLSTATE CORP', 'AMAZON COM INC',
     'AMERICAN EXPRESS CO', 'AMERICAN INTERNATIONAL GROUP, INC.',

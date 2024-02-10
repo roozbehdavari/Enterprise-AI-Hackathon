@@ -170,11 +170,19 @@ with st.sidebar:
     persona = pills('Choose a persona.', ['Sales Representative', 'Investor', 'Financial Analyst'], index=1)
     company = st.selectbox('Choose a company to analyze.', extra.companies, index=extra.companies.index('ServiceNow, Inc.'))
     feature = pills('Choose a feature.', ['Questions', 'Summarize', 'Compare'], index=0)
+    
     if feature == 'Compare':
         choice = st.multiselect(label='Select up to two companies to compare the above company to.', options=[item for item in extra.companies if item != company], max_selections=2)
+        buttons = []
+        columns = st.columns(2)
+        for index, i in enumerate(extra.compare_sections):
+            col_num = 0  if index < len(extra.compare_sections)//2 else 1
+            with columns[col_num]:
+                button = st.button(i, use_container_width=True, type='primary')
+                buttons.append(button)
+        choice_compare = None if True not in buttons else extra.compare_sections[buttons.index(True)]
 
-    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')
-    
+    clear_chat = st.button('➕ New Topic', type='primary', help='Restart the chat.')    
 if clear_chat:
     st.session_state.messages = []
 
