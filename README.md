@@ -10,9 +10,9 @@ SECSavvyNow aims to democratize access to complex financial information, making 
 
 ## Core Features:
 
-Contextual Information Retrieval: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
+*Contextual Information Retrieval*: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
 
-Dynamic Query Generation: Utilizes Cohere's powerful NLP models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
+*Dynamic Query Generation*: Utilizes Cohere's powerful NLP models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
 
 Advanced Document Summarization: Employs CohereRerank and custom summarization techniques to distill lengthy financial documents into concise summaries, highlighting critical data points such as revenue, net income, EPS, and market cap among others.
 
