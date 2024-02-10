@@ -12,7 +12,7 @@ SECSavvyNow aims to democratize access to complex financial information, making 
 
 **Contextual Information Retrieval**: Leverages the Contextual Compression Retriever and CohereRag Retriever to fetch relevant documents from a custom document store powered by Weaviate, an AI-first database. This enables users to query specific financial metrics or topics and receive the most pertinent information based on their query context.
 
-**Dynamic Query Generation**: Utilizes Cohere's powerful NLP models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
+**Dynamic Query Generation**: Utilizes Cohere's powerful LLM models to dynamically generate new queries or refine existing ones based on user inputs and ongoing conversations. This adaptive query mechanism ensures that the information retrieval process remains highly focused and efficient.
 
 **Advanced Document Summarization**: Employs CohereRerank and custom summarization techniques to distill lengthy financial documents into concise summaries, highlighting critical data points such as revenue, net income, EPS, and market cap among others.
 
@@ -24,8 +24,10 @@ SECSavvyNow aims to democratize access to complex financial information, making 
 
 ## Technology Stack:
 
-Cohere's NLP Models: At the heart of SECSavvyNow are Cohere's advanced language models, which power the platform's chat models, embeddings, and document summarization capabilities.
+**Cohere's LLM Models**: At the heart of SECSavvyNow are Cohere's advanced language models, which power the platform's chat models, embeddings, and document summarization capabilities.
 
-Weaviate Vector Database: Utilized for its AI-first approach to data storage and retrieval, enabling semantic search capabilities that are critical for the platform's efficient document fetching mechanism.
+**LangChain**: A comprehensive library for building and deploying language model applications, LangChain is instrumental in SECSavvyNow for orchestrating document retrieval, processing chains, and enhancing the conversational interface with advanced LLM techniques.
 
-Modern Web Technologies: Incorporates technologies such as Streamlit for the web interface, ensuring a smooth and accessible user experience.
+**Weaviate Vector Database**: Utilized for its AI-first approach to data storage and retrieval, enabling semantic search capabilities that are critical for the platform's efficient document fetching mechanism.
+
+**Modern Web Technologies**: Incorporates technologies such as Streamlit for the web interface, ensuring a smooth and accessible user experience.
