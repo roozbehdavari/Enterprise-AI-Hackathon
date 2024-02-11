@@ -7,6 +7,7 @@ SECSavvyNow is an innovative platform designed to revolutionize the way analysts
 ## Objective:
 
 SECSavvyNow aims to democratize access to complex financial information, making it easier for professionals to conduct in-depth analyses, perform competitive intelligence, and make informed decisions without the need for extensive manual research. By automating the extraction and analysis of critical financial data, SECSavvyNow not only saves time but also uncovers insights that might otherwise remain hidden in the vast amount of corporate filings and financial reports.
+
 *See the presentation SecSavvyNow.pdf for more details.*
 
 ## Core Features:
